@@ -1,0 +1,30 @@
+---
+globs: *.tsx
+alwaysApply: false
+---
+# React Component Patterns
+
+## Component Structure & Organization
+
+### File Organization
+- Component file: `component-name.tsx`
+- Export pattern: Named exports with `displayName`
+
+### Component Declaration Pattern
+```typescript
+const ComponentName = ({
+    prop1,
+    prop2,
+    className,
+    ...props
+}: ComponentProps) => (
+    // JSX here
+);
+ComponentName.displayName = "ComponentName";
+
+export { ComponentName };
+```
+
+### Utility Classes
+- Use `cn()` utility for conditional classes
+- Prefer Tailwind utility classes over custom CSS

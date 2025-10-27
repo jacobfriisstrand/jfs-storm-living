@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./breakpoints.css";
+@import "./spacing.css";
+@import "./typography.css";
+@import "./colors.css";
+@import "./animations.css";
+@import "./radii.css";
+@import "./utilities.css";
+@plugin "@tailwindcss/typography";

@@ -1,0 +1,11 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+- NEVER suggest to run `npm run dev` or `npm run build`. The developer will ALWAYS do this manually.
+
+- ALWAYS use kebab-case for file names.
+
+- ALWAYS use context7 MCP for documentation searches, library references, and technical context. When you need to understand how to use a library, framework, or API, use context7 to get the most up-to-date documentation and code examples. This ensures you're working with the latest information and best practices.

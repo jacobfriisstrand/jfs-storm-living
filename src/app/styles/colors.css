@@ -1,0 +1,7 @@
+@theme inline {
+  --color-*: initial;
+
+  --color-dark: #000000;
+  --color-light: #ffffff;
+  --color-brand: #515750;
+}
