@@ -32,8 +32,7 @@ const filteredDocumentTypes = [
 
 export default defineConfig({
   name: "default",
-  // TODO: Change this to the actual company name
-  title: isDev ? "Development" : "Template Company",
+  title: isDev ? "Development" : "Storm Living Qi Gong",
   basePath: "/admin",
   projectId,
   dataset: isDev ? "development" : "production",
