@@ -1,4 +1,5 @@
 import Logo from "@public/assets/template-logo.svg";
+import NextLink from "next/link";
 
 import { Link } from "@/components/ui/link";
 import { getNavigationHref, transformNavigationLinks } from "@/lib/utils/transform-navigation-link";
@@ -17,14 +18,14 @@ export default async function Navigation() {
       <nav className="wrapper py-20 border-2 border-[red]">
         <div>
           <div className="flex items-center justify-between">
-            <Link href="/">
+            <NextLink href="/" className="focus-visible:focus-outline">
               <Logo />
-            </Link>
+            </NextLink>
             <ul className="flex items-center justify-center gap-12">
-              {transformedLinks.map((item, index) => {
+              {transformedLinks.map((item) => {
                 const href = getNavigationHref(item);
                 return (
-                  <li key={index}>
+                  <li key={item.url}>
                     <Link href={href}>{item.label}</Link>
                   </li>
                 );
