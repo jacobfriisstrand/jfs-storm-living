@@ -370,7 +370,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: PAGE_QUERY
-// Query: *[_type in $pageTypes && slug.current == $slug][0]{  ...,    "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },  pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    _id,    _type,    url,    dimensions {      _type,      aspectRatio,      height,      width    }  }}  }}}
+// Query: *[_type in $pageTypes && slug.current == $slug][0]{  ...,    "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },  pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  }}}
 export type PAGE_QUERYResult =
   | {
       _id: string;
@@ -478,10 +478,7 @@ export type PAGE_QUERYResult =
         title?: string;
         image: {
           asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
             url: string | null;
-            dimensions: null;
           } | null;
           media?: unknown;
           hotspot?: SanityImageHotspot;
@@ -882,7 +879,7 @@ export type NAVIGATION_QUERYResult = {
   }> | null;
 } | null;
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "homePage"][0]{    ...,      "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },    pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    _id,    _type,    url,    dimensions {      _type,      aspectRatio,      height,      width    }  }}  }}  }
+// Query: *[_id == "homePage"][0]{    ...,      "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },    pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  }}  }
 export type HOME_PAGE_QUERYResult =
   | {
       _id: string;
@@ -990,10 +987,7 @@ export type HOME_PAGE_QUERYResult =
         title?: string;
         image: {
           asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
             url: string | null;
-            dimensions: null;
           } | null;
           media?: unknown;
           hotspot?: SanityImageHotspot;
@@ -1174,10 +1168,10 @@ export type SITEMAP_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type in $pageTypes && slug.current == $slug][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    _id,\n    _type,\n    url,\n    dimensions {\n      _type,\n      aspectRatio,\n      height,\n      width\n    }\n  }\n}\n  }\n}\n}': PAGE_QUERYResult;
+    '*[_type in $pageTypes && slug.current == $slug][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n}': PAGE_QUERYResult;
     '*[_id == "notFoundPage"][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  heading,\n  subheading,\n}': NOT_FOUND_PAGE_QUERYResult;
     '*[_type == "navigation"][0]{\n  ...,\n  menu[]{\n    _type,\n    "label": select(label == null => undefined, label),\n    "linkType": select(linkType == null => undefined, linkType),\n    "url": select(url == null => undefined, url),\n    "page": page->{\n      _id,\n      _type,\n      "slug": slug.current\n    }\n  },\n}': NAVIGATION_QUERYResult;
-    '*[_id == "homePage"][0]{\n    ...,\n    \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n    pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    _id,\n    _type,\n    url,\n    dimensions {\n      _type,\n      aspectRatio,\n      height,\n      width\n    }\n  }\n}\n  }\n}\n  }': HOME_PAGE_QUERYResult;
+    '*[_id == "homePage"][0]{\n    ...,\n    \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n    pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n  }': HOME_PAGE_QUERYResult;
     '\n  *[_type == "redirect" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n': REDIRECTS_QUERYResult;
     '\n  *[_id == $id][0]{\n    title,\n    "image": seo.image {\n      ...,\n      asset-> {\n        _id,\n        _type,\n        url,\n        metadata {\n          palette\n        }\n      }\n    }\n  }    \n': OG_IMAGE_QUERYResult;
     '\n*[_type in $pageTypes && defined(slug.current)] {\n    "href": select(\n      _type == $pageTypes[0] => "/" + slug.current,\n      slug.current\n    ),\n    _updatedAt\n}\n': SITEMAP_QUERYResult;

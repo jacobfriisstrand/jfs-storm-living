@@ -12,7 +12,7 @@ const homePageModules = ["textAndImage"];
 
 export const homePageType = defineType({
   name: "homePage",
-  title: "Homepage",
+  title: "Forside",
   type: "document",
   icon: () => "🏡",
   fields: [

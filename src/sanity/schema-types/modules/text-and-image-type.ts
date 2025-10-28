@@ -7,10 +7,11 @@ export const textAndImageType = defineType({
     defineField({
       name: "orientation",
       type: "string",
+      title: "Billedeplacering",
       options: {
         list: [
-          { value: "imageLeft", title: "Image Left" },
-          { value: "imageRight", title: "Image Right" },
+          { value: "imageLeft", title: "Billede til venstre" },
+          { value: "imageRight", title: "Billede til højre" },
         ],
       },
     }),
@@ -31,7 +32,7 @@ export const textAndImageType = defineType({
     prepare({ title, media }) {
       return {
         title,
-        subtitle: "Text and Image",
+        subtitle: "Tekst og billede",
         media,
       };
     },

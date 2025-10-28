@@ -18,7 +18,7 @@ export const navigationType = defineType({
   fields: [
     defineField({
       name: "menu",
-      description: "The links for the navigation bar.",
+      description: "Links til navigationslinjen.",
       type: "array",
       of: [{ type: "navigationLink" }],
       validation: Rule => Rule.required(),

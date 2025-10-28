@@ -6,14 +6,14 @@ import { defineField, defineType } from "sanity";
 export const basePageType = defineType({
   type: "document",
   name: "basePage",
-  title: "Base Page",
+  title: "Basis-side",
   fields: [
     defineField({
       name: "title",
-      title: "Internal title",
+      title: "Intern titel",
       type: "string",
       validation: rule => rule.required(),
-      description: "This is used to identify the page in the CMS, and is not displayed on the live site.",
+      description: "Dette bruges til at identificere siden i CMS'et og vises ikke på den offentlige side.",
     }),
     defineField({
       name: "slug",
@@ -21,14 +21,14 @@ export const basePageType = defineType({
       options: {
         source: "title",
       },
-      description: "This is used to generate the URL for the page, and can be generated from the title.",
+      description: "Dette bruges til at generere URL'en for siden og kan genereres ud fra titlen.",
       hidden: ({ document }) => document?._type === "homePage" || document?._type === "notFoundPage",
       validation: rule => rule.custom((slug, context) => {
         if (context.document?._type === "homePage" || context.document?._type === "notFoundPage") {
           return true;
         }
         if (!slug?.current) {
-          return "Slug is required";
+          return "Slug er påkrævet";
         }
         return true;
       }),
@@ -37,7 +37,7 @@ export const basePageType = defineType({
       name: "seo",
       type: "seo",
       title: "SEO",
-      validation: rule => rule.required().error("SEO content is required"),
+      validation: rule => rule.required().error("SEO-indhold er påkrævet"),
     }),
   ],
   preview: {

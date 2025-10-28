@@ -10,8 +10,8 @@ export const imageFieldType = defineType({
     defineField({
       name: "alt",
       type: "string",
-      title: "Alternative text",
-      description: "Alternative text is used to describe the image to visually impaired users. It is also used by search engines to understand the image content.",
+      title: "Alternativ tekst",
+      description: "Alternativ tekst bruges til at beskrive billedet for synshandicappede. Den bruges også af søgemaskiner til at forstå billedets indhold.",
       validation: Rule => Rule.required(),
     }),
   ],

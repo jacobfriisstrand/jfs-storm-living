@@ -27,16 +27,16 @@ export const richTextType = defineType({
         { title: "H2", value: "h2" },
         { title: "H3", value: "h3" },
         { title: "H4", value: "h4" },
-        { title: "Quote", value: "blockquote" },
+        { title: "Citat", value: "blockquote" },
       ],
-      lists: [{ title: "Bullet", value: "bullet" }],
+      lists: [{ title: "Punktliste", value: "bullet" }],
       // Marks let you mark up inline text in the Portable Text Editor
       marks: {
         // Decorators usually describe a single property – e.g. a typographic
         // preference or highlighting
         decorators: [
-          { title: "Strong", value: "strong" },
-          { title: "Emphasis", value: "em" },
+          { title: "Fed", value: "strong" },
+          { title: "Kursiv", value: "em" },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [

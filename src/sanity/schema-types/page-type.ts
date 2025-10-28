@@ -8,7 +8,7 @@ export const studioClient = client.withConfig({ apiVersion });
 
 export const pageType = defineType({
   name: "page",
-  title: "Page",
+  title: "Side",
   icon: () => "📄",
   type: "document",
   groups: [
@@ -20,7 +20,7 @@ export const pageType = defineType({
     },
     {
       name: "content",
-      title: "Page content",
+      title: "Sideindhold",
       icon: () => "📄",
     },
   ],
@@ -33,11 +33,11 @@ export const pageType = defineType({
     }),
     defineField({
       name: "title",
-      title: "Internal title",
+      title: "Intern titel",
       type: "string",
       group: "content",
       validation: rule => rule.required(),
-      description: "This is used to identify the page in the CMS, and is not displayed on the live site.",
+      description: "Dette bruges til at identificere siden i CMS'et og vises ikke offentligt.",
     }),
     defineField({
       name: "slug",
@@ -46,7 +46,7 @@ export const pageType = defineType({
       options: {
         source: "title",
       },
-      description: "This is used to generate the URL for the page, and can be generated from the title. If the page is the homepage, this must be left empty.",
+      description: "Dette bruges til at generere URL'en for siden og kan genereres ud fra titlen. Hvis siden er forsiden, skal dette felt være tomt.",
 
       validation: Rule =>
         Rule.custom(async (value, context) => {
@@ -59,12 +59,12 @@ export const pageType = defineType({
           const isHomePage = globalSettings?.homePage?._ref === cleanDocId;
 
           if (isHomePage) {
-            return value ? { message: "Homepage must not have a slug", isError: true } : true;
+            return value ? { message: "Forsiden må ikke have en slug", isError: true } : true;
           }
 
-          return !value ? { message: "Slug is required for non-homepage pages" } : true;
+          return !value ? { message: "Slug er påkrævet for sider, der ikke er forsiden" } : true;
         })
-          .info("This is used to generate the URL for the page, and can be generated from the title. If the page is the homepage, this must be left empty."),
+          .info("Dette bruges til at generere URL'en for siden og kan genereres ud fra titlen. Hvis siden er forsiden, skal dette felt være tomt."),
     }),
     defineField({
       name: "content",

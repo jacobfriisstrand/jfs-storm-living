@@ -4,19 +4,19 @@ import { basePageType } from "./base-page-type";
 
 export const notFoundPageType = defineType({
   name: "notFoundPage",
-  title: "Not Found Page",
+  title: "Ikke fundet side",
   type: "document",
   icon: () => "📄",
   fields: [
     ...basePageType.fields,
     defineField({
       name: "heading",
-      title: "Heading",
+      title: "Overskrift",
       type: "string",
     }),
     defineField({
       name: "subheading",
-      title: "Subheading",
+      title: "Underoverskrift",
       type: "text",
     }),
   ],

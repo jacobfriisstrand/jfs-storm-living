@@ -7,11 +7,11 @@ export const structure: StructureResolver = S =>
   S.list()
     .title("Menu")
     .items([
-      S.divider().title("Pages"),
+      S.divider().title("Sider"),
       S.listItem()
         .id("homePage")
         .schemaType("homePage")
-        .title("Homepage")
+        .title("Forside")
         .child(
           S.editor()
             .id("homePage")
@@ -29,9 +29,9 @@ export const structure: StructureResolver = S =>
               .replace(/^./, str => str.toUpperCase()), // Capitalize first letter only
           ),
         ),
-      S.divider().title("Settings"),
+      S.divider().title("Indstillinger"),
       S.listItem()
-        .title("Global settings")
+        .title("Globale indstillinger")
         .icon(() => "🔧")
         .child(
           S.editor()
@@ -50,18 +50,21 @@ export const structure: StructureResolver = S =>
             .documentId("navigation"),
         ),
       S.listItem()
-        .title("Not found page")
+        .title("Ikke fundet side")
         .icon(() => "🚨")
         .child(
           S.editor()
             .id("notFoundPage")
             .schemaType("notFoundPage")
-            .title("Not found page")
+            .title("Ikke fundet side")
             .documentId("notFoundPage"),
         ),
+      S.documentTypeListItem("redirect")
+        .title("Omdirigeringer")
+        .icon(() => "🔄"),
       ...S.documentTypeListItems().filter(
         item =>
           item.getId()
-          && !["globalSettings", "basePage", "homePage", "navigation", "notFoundPage", ...PAGE_TYPES].includes(item.getId()!),
+          && !["globalSettings", "basePage", "homePage", "navigation", "notFoundPage", "redirect", ...PAGE_TYPES].includes(item.getId()!),
       ),
     ]);

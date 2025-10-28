@@ -7,16 +7,16 @@ export const seoType = defineType({
   fields: [
     defineField({
       name: "title",
-      title: "SEO title",
+      title: "SEO-titel",
       type: "string",
-      validation: rule => rule.required().error("SEO title is required"),
+      validation: rule => rule.required().error("SEO-titel er påkrævet"),
     }),
     defineField({
       name: "description",
-      title: "SEO description",
+      title: "SEO-beskrivelse",
       type: "text",
       rows: 3,
-      description: "The SEO description is a concise summary of your page. This appears in search results and when your page is shared on social media.",
+      description: "SEO-beskrivelsen er et kort resumé af din side. Den vises i søgeresultater og når din side deles på sociale medier.",
       components: {
         input: (props) => {
           const { value, onChange } = props;
@@ -33,28 +33,28 @@ export const seoType = defineType({
               <div className="mt-1 text-xs">
                 {charCount}
                 {" "}
-                characters
+                tegn
               </div>
             </div>
           );
         },
       },
       validation: rule => [
-        rule.required().error("SEO description is required"),
-        rule.required().info("A SEO description will help search engines understand your page and its content. Use keywords that are relevant to your page and content for better search engine visibility."),
-        rule.min(150).max(160).warning("For optimal SEO, this summary should be between 150-160 characters"),
+        rule.required().error("SEO-beskrivelse er påkrævet"),
+        rule.required().info("En SEO-beskrivelse hjælper søgemaskiner med at forstå din side og dens indhold. Brug nøgleord, der er relevante for siden og indholdet, for bedre synlighed."),
+        rule.min(150).max(160).warning("For optimal SEO bør resuméet være mellem 150-160 tegn"),
       ],
     }),
     defineField({
       name: "image",
-      title: "SEO image",
+      title: "SEO-billede",
       type: "image",
-      description: "This image will be used for the SEO image. This image is shown on search engine results pages, when the page is shared as a link on eg. social media.",
+      description: "Dette billede bruges som SEO-billede. Det vises på søgeresultatsider og når siden deles som et link på f.eks. sociale medier.",
     }),
     defineField({
       name: "noIndex",
       type: "boolean",
-      description: "If enabled, the page will not be recognized by search engines",
+      description: "Hvis aktiveret, vil siden ikke blive indekseret af søgemaskiner",
     }),
 
   ],

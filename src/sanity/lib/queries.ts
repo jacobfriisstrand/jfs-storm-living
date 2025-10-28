@@ -4,15 +4,7 @@ const IMAGE_QUERY = `{
   ...,
   alt,
   asset-> {
-    _id,
-    _type,
-    url,
-    dimensions {
-      _type,
-      aspectRatio,
-      height,
-      width
-    }
+    url
   }
 }`;
 

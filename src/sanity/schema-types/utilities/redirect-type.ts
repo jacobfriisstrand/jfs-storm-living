@@ -29,14 +29,14 @@ function isValidUrl(value: string | undefined) {
 
 export const redirectType = defineType({
   name: "redirect",
-  title: "Redirects",
+  title: "Omdirigeringer",
   icon: () => "🔄",
   type: "document",
   validation: Rule =>
     Rule.custom((doc: SanityDocumentLike | undefined) => {
       if (doc && doc.source === doc.destination) {
         return ["source", "destination"].map(field => ({
-          message: "Source and destination cannot be the same",
+          message: "Kilde og destination må ikke være ens",
           path: [field],
         }));
       }
@@ -46,11 +46,13 @@ export const redirectType = defineType({
   fields: [
     defineField({
       name: "source",
+      title: "Kilde",
       type: "string",
       validation: Rule => Rule.required().custom(isValidInternalPath),
     }),
     defineField({
       name: "destination",
+      title: "Destination",
       type: "string",
       validation: Rule =>
         Rule.required().custom((value: string | undefined) => {
@@ -67,13 +69,15 @@ export const redirectType = defineType({
     }),
     defineField({
       name: "permanent",
-      description: "Should the redirect be permanent (301) or temporary (302)",
+      title: "Permanent",
+      description: "Skal omdirigeringen være permanent (301) eller midlertidig (302)",
       type: "boolean",
       initialValue: true,
     }),
     defineField({
       name: "isEnabled",
-      description: "Toggle this redirect on or off",
+      title: "Aktiveret",
+      description: "Aktivér eller deaktiver denne omdirigering",
       type: "boolean",
       initialValue: true,
     }),
@@ -85,8 +89,8 @@ export const redirectType = defineType({
     },
     prepare({ title, destination }) {
       return {
-        title: `From ${title}`,
-        subtitle: `To ${destination}`,
+        title: `Fra ${title}`,
+        subtitle: `Til ${destination}`,
       };
     },
   },
