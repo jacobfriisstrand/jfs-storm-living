@@ -38,6 +38,7 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
       },
     ],
+    qualities: [100, 75],
   },
 
   devIndicators: false,
