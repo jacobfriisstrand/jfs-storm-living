@@ -4,6 +4,7 @@ import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
 import { basePageType } from "@/sanity/schema-types/page-templates/base-page-type";
+import { genericPageType } from "@/sanity/schema-types/page-templates/generic-page-type";
 import { homePageType } from "@/sanity/schema-types/page-templates/home-page-type";
 import { notFoundPageType } from "@/sanity/schema-types/page-templates/not-found-page-type";
 import { imageFieldType } from "@/sanity/schema-types/utilities/image-field-type";
@@ -31,4 +32,5 @@ export const schema: SchemaTypeDefinition[] = [
   // Utility types
   redirectType,
   navigationLinkType,
+  genericPageType,
 ];

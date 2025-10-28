@@ -30,7 +30,29 @@ export type NavigationLink = {
         _type: "reference";
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "notFoundPage";
+      }
+    | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "genericPage";
       };
+};
+
+export type GenericPage = {
+  _id: string;
+  _type: "genericPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  seo?: Seo;
+  pageBuilder?: Array<
+    {
+      _key: string;
+    } & TextAndImage
+  >;
 };
 
 export type Redirect = {
@@ -346,6 +368,7 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes =
   | NavigationLink
+  | GenericPage
   | Redirect
   | NotFoundPage
   | HomePage
@@ -398,6 +421,48 @@ export type PAGE_QUERYResult =
         noIndex: boolean | false;
       };
       pageBuilder: null;
+    }
+  | {
+      _id: string;
+      _type: "genericPage";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      seo: {
+        title: string | null;
+        description: string | "";
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        noIndex: boolean | false;
+      };
+      pageBuilder: Array<{
+        _key: string;
+        _type: "textAndImage";
+        orientation?: "imageLeft" | "imageRight";
+        title?: string;
+        image: {
+          asset: {
+            url: string | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string | null;
+          _type: "imageFieldType";
+        } | null;
+      }> | null;
     }
   | {
       _id: string;
@@ -645,6 +710,39 @@ export type NOT_FOUND_PAGE_QUERYResult =
     }
   | {
       _id: string;
+      _type: "genericPage";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      seo: {
+        title: string | null;
+        description: string | "";
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        noIndex: boolean | false;
+      };
+      pageBuilder?: Array<
+        {
+          _key: string;
+        } & TextAndImage
+      >;
+      heading: null;
+      subheading: null;
+    }
+  | {
+      _id: string;
       _type: "globalSettings";
       _createdAt: string;
       _updatedAt: string;
@@ -867,6 +965,11 @@ export type NAVIGATION_QUERYResult = {
     page:
       | {
           _id: string;
+          _type: "genericPage";
+          slug: string | null;
+        }
+      | {
+          _id: string;
           _type: "homePage";
           slug: string | null;
         }
@@ -907,6 +1010,48 @@ export type HOME_PAGE_QUERYResult =
         noIndex: boolean | false;
       };
       pageBuilder: null;
+    }
+  | {
+      _id: string;
+      _type: "genericPage";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      seo: {
+        title: string | null;
+        description: string | "";
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        noIndex: boolean | false;
+      };
+      pageBuilder: Array<{
+        _key: string;
+        _type: "textAndImage";
+        orientation?: "imageLeft" | "imageRight";
+        title?: string;
+        image: {
+          asset: {
+            url: string | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string | null;
+          _type: "imageFieldType";
+        } | null;
+      }> | null;
     }
   | {
       _id: string;
