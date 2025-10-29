@@ -21,14 +21,22 @@ export const structure: StructureResolver = S =>
       // Dynamically add page types from PAGE_TYPES constant
       ...PAGE_TYPES
         .filter(pageType => pageType !== "homePage" && pageType !== "notFoundPage")
-        .map(pageType =>
-          S.documentTypeListItem(pageType).title(
-            pageType
+        .map((pageType) => {
+          // Custom title mapping for specific page types
+          const customTitles: Record<string, string> = {
+            genericPage: "Generisk side",
+            // Add more custom titles here as needed
+            // anotherPageType: "Custom Title",
+          };
+
+          const title = customTitles[pageType]
+            || pageType
               .replace(/([A-Z])/g, " $1") // Add space before capital letters
               .toLowerCase() // Convert to lowercase
-              .replace(/^./, str => str.toUpperCase()), // Capitalize first letter only
-          ),
-        ),
+              .replace(/^./, str => str.toUpperCase()); // Capitalize first letter only
+
+          return S.documentTypeListItem(pageType).title(title);
+        }),
       S.divider().title("Indstillinger"),
       S.listItem()
         .title("Globale indstillinger")

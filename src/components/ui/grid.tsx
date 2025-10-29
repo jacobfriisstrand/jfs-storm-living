@@ -18,7 +18,7 @@ function GridItem({ className, asChild = false, ref, ...props }: GridItemProps) 
   return (
     <Component
       ref={ref}
-      className={cn("component-grid-item", className)}
+      className={cn("component-grid-item col-span-full", className)}
       {...props}
     />
   );

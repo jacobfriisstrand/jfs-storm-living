@@ -85,6 +85,7 @@ export function HomepageHero({
       <Container size="fluid" className="[grid-area:1/1] -z-1 relative">
         {image?.asset?.url && image.alt && (
           <Image
+            loading="eager"
             className="aspect-3/4 tablet:aspect-video max-h-[80svh]"
             image={{
               asset: { url: image.asset.url },
@@ -92,12 +93,12 @@ export function HomepageHero({
             }}
           />
         )}
-        <ImageOverlay />
+        <ImageOverlay orientation="fromBottom" colorScheme="dark" />
       </Container>
 
       <Container className="[grid-area:1/1] pb-28">
         <Grid className="max-tablet:gap-y-16">
-          <GridItem className="col-span-full tablet:col-span-7">
+          <GridItem className="tablet:col-span-7">
             {title && (
               <Heading size="h1" as="h1" colorScheme="light">
                 {title}
@@ -106,7 +107,7 @@ export function HomepageHero({
 
           </GridItem>
 
-          <GridItem className="col-span-full tablet:col-span-4 tablet:col-start-9 grid gap-16 tablet:gap-20">
+          <GridItem className="tablet:col-span-4 tablet:col-start-9 grid gap-16 tablet:gap-20">
             {description && (
               <Paragraph colorScheme="light">{description}</Paragraph>
             )}

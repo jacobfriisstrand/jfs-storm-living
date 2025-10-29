@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
-export const homepageHeroType = defineType({
-  name: "homepageHero",
-  title: "Forside hero",
+export const genericHeroType = defineType({
+  name: "genericHero",
+  title: "Generisk side hero",
   type: "object",
   fields: [
     defineField({
@@ -12,23 +12,10 @@ export const homepageHeroType = defineType({
       validation: Rule => Rule.required().error("Dette felt er påkrævet"),
     }),
     defineField({
-      name: "description",
-      title: "Underoverskrift",
-      type: "text",
-      validation: Rule => Rule.required().error("Dette felt er påkrævet"),
-    }),
-    defineField({
       name: "image",
       title: "Billede",
       type: "imageFieldType",
       validation: Rule => Rule.required().error("Dette felt er påkrævet"),
-    }),
-    defineField({
-      name: "buttons",
-      title: "Knapper",
-      type: "array",
-      of: [{ type: "navigationLink" }],
-      validation: Rule => Rule.max(2).error("Maksimum 2 knapper er tilladt"),
     }),
   ],
   preview: {
@@ -39,7 +26,7 @@ export const homepageHeroType = defineType({
     prepare({ title, media }) {
       return {
         title,
-        subtitle: "Forside hero",
+        subtitle: "Generisk side hero",
         media,
       };
     },

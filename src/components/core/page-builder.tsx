@@ -4,6 +4,7 @@ import { createDataAttribute } from "next-sanity";
 
 import type { PAGE_QUERYResult } from "@/sanity/types";
 
+import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { TextAndImage } from "@/components/modules/text-and-image";
 import { createDataAttributeConfig } from "@/sanity/lib/data-attribute-config";
@@ -69,6 +70,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <HomepageHero {...block} />
+              </DragHandle>
+            );
+          case "genericHero":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <GenericHero {...block} />
               </DragHandle>
             );
           default:
