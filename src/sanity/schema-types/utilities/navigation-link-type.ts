@@ -9,7 +9,7 @@ export const navigationLinkType = defineType({
     defineField({
       name: "label",
       title: "Etiket",
-      description: "Teksten der vises i navigationen",
+      description: "Teksten der vises i linket / knappen",
       type: "string",
     }),
     defineField({

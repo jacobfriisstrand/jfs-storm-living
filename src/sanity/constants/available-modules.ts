@@ -1,1 +1,1 @@
-export const AVAILABLE_MODULES = ["textAndImage"];
+export const AVAILABLE_MODULES = ["textAndImage", "homepageHero"];

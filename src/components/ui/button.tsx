@@ -8,7 +8,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "border px-16 py-8 rounded-base focus-visible:focus-outline cursor-pointer active:scale-95 duration-normal",
+  "border px-24 text-center py-8 rounded-base focus-visible:focus-outline cursor-pointer active:scale-95 duration-normal",
   {
     variants: {
       variant: {

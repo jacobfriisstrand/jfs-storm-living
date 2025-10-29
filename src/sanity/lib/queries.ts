@@ -23,6 +23,24 @@ const CONTENT_QUERY = `pageBuilder[]{
     ...,
     image ${IMAGE_QUERY}
   }
+,
+  _type == "homepageHero" => {
+    ...,
+    title,
+    description,
+    image ${IMAGE_QUERY},
+    buttons[]{
+      ...,
+      "label": select(label == null => undefined, label),
+      linkType,
+      url,
+      page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.

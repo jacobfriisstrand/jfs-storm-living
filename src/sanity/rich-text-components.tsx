@@ -1,13 +1,13 @@
 import type { PortableTextComponents } from "next-sanity";
 
-import { SanityImage } from "@/components/core/sanity-image";
+import { Image } from "@/components/core/image";
 
 export const components: PortableTextComponents = {
   types: {
     image: props =>
       props.value
         ? (
-            <SanityImage
+            <Image
               className="not-prose w-full h-auto"
               image={props.value}
             />

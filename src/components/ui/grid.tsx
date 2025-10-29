@@ -30,7 +30,7 @@ function Grid({ className, asChild = false, ...props }: GridProps) {
   return (
     <Component
       className={cn(
-        `component-grid tablet:grid-cols-12 tablet:gap-8 desktop:gap-12 mx-5 grid grid-cols-4 gap-4`,
+        `component-grid tablet:grid-cols-12 tablet:gap-8 desktop:gap-12 mx-20 grid grid-cols-4 gap-4`,
         className,
       )}
       {...props}
