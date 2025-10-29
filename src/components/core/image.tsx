@@ -28,7 +28,7 @@ function Image({
         src={image.asset.url}
         alt={image.alt}
         fill
-        quality={100}
+        quality={75}
         sizes={sizes}
         {...props}
         className="object-cover"

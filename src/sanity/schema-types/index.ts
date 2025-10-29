@@ -1,6 +1,7 @@
 import type { SchemaTypeDefinition } from "sanity";
 
 import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
+import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
 import { basePageType } from "@/sanity/schema-types/page-templates/base-page-type";
@@ -33,4 +34,5 @@ export const schema: SchemaTypeDefinition[] = [
   redirectType,
   navigationLinkType,
   genericPageType,
+  homepageHeroType,
 ];

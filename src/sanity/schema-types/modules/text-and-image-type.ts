@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 export const textAndImageType = defineType({
   name: "textAndImage",
   type: "object",
+  title: "Tekst og billede",
   fields: [
     defineField({
       name: "orientation",
