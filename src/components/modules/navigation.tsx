@@ -25,7 +25,7 @@ export default async function Navigation() {
               {transformedLinks.map((item) => {
                 const href = getNavigationHref(item);
                 return (
-                  <li key={item.url}>
+                  <li key={item.page?._ref ?? item.url}>
                     <Link href={href}>{item.label}</Link>
                   </li>
                 );

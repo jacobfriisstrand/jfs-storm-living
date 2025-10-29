@@ -4,4 +4,6 @@
   --color-dark: #000000;
   --color-light: #ffffff;
   --color-brand: #515750;
+
+  --color-background: var(--color-light);
 }
