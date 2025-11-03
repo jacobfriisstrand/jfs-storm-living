@@ -6,4 +6,10 @@
 @import "./animations.css";
 @import "./radii.css";
 @import "./utilities.css";
+@import "tw-animate-css";
+
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --navigation-height-mobile: 82px;
+}

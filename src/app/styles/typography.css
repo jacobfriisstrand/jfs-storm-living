@@ -4,7 +4,7 @@
   --tracking-*: initial;
   --leading-*: initial;
 
-  --font-sans: Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif;
+  --font-sans: Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
   --font-serif: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
 
   /* Font weights */

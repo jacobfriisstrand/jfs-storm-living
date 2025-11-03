@@ -115,7 +115,7 @@ export function HomepageHero({
               {transformedButtons && transformedButtons.map((btn, index) => {
                 const href = getNavigationHref(btn);
                 return (
-                  <Button className="w-fit" key={`${href}-${btn.label}`} href={href} variant={index > 0 ? "secondary" : "primary"}>
+                  <Button className="w-fit focus-visible:outline-light" key={`${href}-${btn.label}`} href={href} variant={index > 0 ? "secondary" : "primary"}>
                     {btn.label}
                   </Button>
                 );

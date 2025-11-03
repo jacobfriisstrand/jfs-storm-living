@@ -151,6 +151,18 @@ export type GlobalSettings = {
   _updatedAt: string;
   _rev: string;
   companyName?: string;
+  logo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   favicon?: {
     asset?: {
       _ref: string;
@@ -163,6 +175,7 @@ export type GlobalSettings = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  copyEmailTooltipText?: string;
   contactInfo?: {
     phone?: string;
     email?: string;
@@ -191,11 +204,13 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  logoText?: string;
   menu?: Array<
     {
       _key: string;
     } & NavigationLink
   >;
+  contactButtonText?: string;
 };
 
 export type TextAndImage = {
@@ -538,6 +553,18 @@ export type PAGE_QUERYResult =
       _updatedAt: string;
       _rev: string;
       companyName?: string;
+      logo?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
       favicon?: {
         asset?: {
           _ref: string;
@@ -550,6 +577,7 @@ export type PAGE_QUERYResult =
         crop?: SanityImageCrop;
         _type: "image";
       };
+      copyEmailTooltipText?: string;
       contactInfo?: {
         phone?: string;
         email?: string;
@@ -668,11 +696,13 @@ export type PAGE_QUERYResult =
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      logoText?: string;
       menu?: Array<
         {
           _key: string;
         } & NavigationLink
       >;
+      contactButtonText?: string;
       seo: {
         title: null;
         description: "";
@@ -860,6 +890,18 @@ export type NOT_FOUND_PAGE_QUERYResult =
       _updatedAt: string;
       _rev: string;
       companyName?: string;
+      logo?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
       favicon?: {
         asset?: {
           _ref: string;
@@ -872,6 +914,7 @@ export type NOT_FOUND_PAGE_QUERYResult =
         crop?: SanityImageCrop;
         _type: "image";
       };
+      copyEmailTooltipText?: string;
       contactInfo?: {
         phone?: string;
         email?: string;
@@ -943,11 +986,13 @@ export type NOT_FOUND_PAGE_QUERYResult =
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      logoText?: string;
       menu?: Array<
         {
           _key: string;
         } & NavigationLink
       >;
+      contactButtonText?: string;
       seo: {
         title: null;
         description: "";
@@ -1064,14 +1109,35 @@ export type NOT_FOUND_PAGE_QUERYResult =
       subheading: null;
     }
   | null;
+// Variable: LOGO_QUERY
+// Query: *[_type == "globalSettings"][0]{  "logo": logo {  ...,  alt,  asset-> {    url  }}}
+export type LOGO_QUERYResult = {
+  logo: {
+    asset: {
+      url: string | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    alt: null;
+  } | null;
+} | null;
+// Variable: CONTACT_BUTTONS_QUERY
+// Query: *[_type == "globalSettings"][0]{  "email": contactInfo.email,  "copyEmailTooltipText": copyEmailTooltipText}
+export type CONTACT_BUTTONS_QUERYResult = {
+  email: string | null;
+  copyEmailTooltipText: string | null;
+} | null;
 // Variable: NAVIGATION_QUERY
-// Query: *[_type == "navigation"][0]{  ...,  menu[]{    _type,    "label": select(label == null => undefined, label),    "linkType": select(linkType == null => undefined, linkType),    "url": select(url == null => undefined, url),    "page": page->{      _id,      _type,      "slug": slug.current    }  },}
+// Query: *[_type == "navigation"][0]{  ...,  logoText,  contactButtonText,  menu[]{    _type,    "label": select(label == null => undefined, label),    "linkType": select(linkType == null => undefined, linkType),    "url": select(url == null => undefined, url),    "page": page->{      _id,      _type,      "slug": slug.current    }  },}
 export type NAVIGATION_QUERYResult = {
   _id: string;
   _type: "navigation";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  logoText: string | null;
   menu: Array<{
     _type: "navigationLink";
     label: null | string;
@@ -1095,6 +1161,7 @@ export type NAVIGATION_QUERYResult = {
         }
       | null;
   }> | null;
+  contactButtonText: string | null;
 } | null;
 // Variable: HOME_PAGE_QUERY
 // Query: *[_id == "homePage"][0]{    ...,      "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },    pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "homepageHero" => {    ...,    title,    description,    image {  ...,  alt,  asset-> {    url  }},    buttons[]{      ...,      "label": select(label == null => undefined, label),      linkType,      url,      page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "genericHero" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  }}  }
@@ -1192,6 +1259,18 @@ export type HOME_PAGE_QUERYResult =
       _updatedAt: string;
       _rev: string;
       companyName?: string;
+      logo?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
       favicon?: {
         asset?: {
           _ref: string;
@@ -1204,6 +1283,7 @@ export type HOME_PAGE_QUERYResult =
         crop?: SanityImageCrop;
         _type: "image";
       };
+      copyEmailTooltipText?: string;
       contactInfo?: {
         phone?: string;
         email?: string;
@@ -1322,11 +1402,13 @@ export type HOME_PAGE_QUERYResult =
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      logoText?: string;
       menu?: Array<
         {
           _key: string;
         } & NavigationLink
       >;
+      contactButtonText?: string;
       seo: {
         title: null;
         description: "";
@@ -1489,7 +1571,9 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type in $pageTypes && slug.current == $slug][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n}': PAGE_QUERYResult;
     '*[_id == "notFoundPage"][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  heading,\n  subheading,\n}': NOT_FOUND_PAGE_QUERYResult;
-    '*[_type == "navigation"][0]{\n  ...,\n  menu[]{\n    _type,\n    "label": select(label == null => undefined, label),\n    "linkType": select(linkType == null => undefined, linkType),\n    "url": select(url == null => undefined, url),\n    "page": page->{\n      _id,\n      _type,\n      "slug": slug.current\n    }\n  },\n}': NAVIGATION_QUERYResult;
+    '*[_type == "globalSettings"][0]{\n  "logo": logo {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n}': LOGO_QUERYResult;
+    '*[_type == "globalSettings"][0]{\n  "email": contactInfo.email,\n  "copyEmailTooltipText": copyEmailTooltipText\n}': CONTACT_BUTTONS_QUERYResult;
+    '*[_type == "navigation"][0]{\n  ...,\n  logoText,\n  contactButtonText,\n  menu[]{\n    _type,\n    "label": select(label == null => undefined, label),\n    "linkType": select(linkType == null => undefined, linkType),\n    "url": select(url == null => undefined, url),\n    "page": page->{\n      _id,\n      _type,\n      "slug": slug.current\n    }\n  },\n}': NAVIGATION_QUERYResult;
     '*[_id == "homePage"][0]{\n    ...,\n    \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n    pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n  }': HOME_PAGE_QUERYResult;
     '\n  *[_type == "redirect" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n': REDIRECTS_QUERYResult;
     '\n  *[_id == $id][0]{\n    title,\n    "image": seo.image {\n      ...,\n      asset-> {\n        _id,\n        _type,\n        url,\n        metadata {\n          palette\n        }\n      }\n    }\n  }    \n': OG_IMAGE_QUERYResult;
