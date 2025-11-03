@@ -65,8 +65,19 @@ export const NOT_FOUND_PAGE_QUERY = defineQuery(`*[_id == "notFoundPage"][0]{
   subheading,
 }`);
 
+export const LOGO_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "logo": logo ${IMAGE_QUERY}
+}`);
+
+export const CONTACT_BUTTONS_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "email": contactInfo.email,
+  "copyEmailTooltipText": copyEmailTooltipText
+}`);
+
 export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"][0]{
   ...,
+  logoText,
+  contactButtonText,
   menu[]{
     _type,
     "label": select(label == null => undefined, label),

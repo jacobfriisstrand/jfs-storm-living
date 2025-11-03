@@ -14,6 +14,13 @@ export const globalSettingsType = defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: "logo",
+      type: "image",
+      title: "Logo",
+      validation: Rule => Rule.required(),
+      description: "Logo der bruges alle steder hvor logoet er nødvendigt.",
+    }),
+    defineField({
       name: "favicon",
       type: "image",
       title: "Favicon",
@@ -22,6 +29,14 @@ export const globalSettingsType = defineType({
       options: {
         accept: "image/png, image/x-icon, image/svg+xml",
       },
+    }),
+    defineField({
+      name: "copyEmailTooltipText",
+      type: "string",
+      title: "Kopier e-mail tooltip tekst",
+      description: "Teksten der vises i tooltipen når e-mailen kopieres.",
+      validation: Rule => Rule.required().error("Dette felt er påkrævet"),
+      placeholder: "Kopier e-mail",
     }),
     defineField({
       name: "contactInfo",

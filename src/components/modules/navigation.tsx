@@ -1,39 +1,101 @@
-import Logo from "@public/assets/template-logo.svg";
+"use client";
+
+import type { ComponentProps } from "react";
+
+import NextImage from "next/image";
 import NextLink from "next/link";
+import { useEffect, useMemo } from "react";
 
+import type { CONTACT_BUTTONS_QUERYResult, LOGO_QUERYResult, NAVIGATION_QUERYResult } from "@/sanity/types";
+
+import { Button } from "@/components/ui/button";
+import ContactButtons from "@/components/ui/contact-buttons";
+import { Container } from "@/components/ui/container";
+import { Grid, GridItem } from "@/components/ui/grid";
 import { Link } from "@/components/ui/link";
+import { Paragraph } from "@/components/ui/typography";
+import { useHamburgerMenu } from "@/contexts/hamburger-menu-context";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
 import { getNavigationHref, transformNavigationLinks } from "@/lib/utils/transform-navigation-link";
-import { sanityFetch } from "@/sanity/lib/live";
-import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 
-export default async function Navigation() {
-  const { data: navigationData } = await sanityFetch({
-    query: NAVIGATION_QUERY,
-  });
+export default function Navigation({ navigationData, logoData, contactButtonsData }: { navigationData: NAVIGATION_QUERYResult; logoData: LOGO_QUERYResult; contactButtonsData: CONTACT_BUTTONS_QUERYResult }) {
+  const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHamburgerMenu();
+
+  // Get the breakpoint value from CSS variable
+  const tabletBreakpoint = useMemo(() => {
+    if (typeof window === "undefined")
+      return "1024px";
+    const root = document.documentElement;
+    const breakpointValue = getComputedStyle(root).getPropertyValue("--breakpoint-tablet").trim();
+    return breakpointValue || "1024px";
+  }, []);
+
+  const isAboveTablet = useMediaQuery(`(min-width: ${tabletBreakpoint})`);
+
+  // Always set menu to open when screen is >= tablet breakpoint, closed otherwise
+  useEffect(() => {
+    if (isAboveTablet) {
+      setIsHamburgerMenuOpen(true);
+    }
+    else {
+      setIsHamburgerMenuOpen(false);
+    }
+  }, [isAboveTablet, setIsHamburgerMenuOpen]);
 
   const transformedLinks = transformNavigationLinks(navigationData?.menu);
 
   return (
-    <header>
-      <nav className="wrapper py-20 border-2 border-[red]">
-        <div>
-          <div className="flex items-center justify-between">
-            <NextLink href="/" className="focus-visible:focus-outline">
-              <Logo />
-            </NextLink>
-            <ul className="flex items-center justify-center gap-12">
-              {transformedLinks.map((item) => {
-                const href = getNavigationHref(item);
-                return (
-                  <li key={item.page?._ref ?? item.url}>
-                    <Link href={href}>{item.label}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <Container size="fluid" className="bg-dark text-light h-(--navigation-height-mobile)">
+      <Container className="max-tablet:contents">
+        <Grid className="max-tablet:contents">
+          <GridItem className="max-tablet:contents tablet:col-span-full">
+            <header>
+              <nav>
+                <div className="flex items-center justify-between relative py-16 gap-20">
+                  <NextLink href="/" className="focus-visible:focus-outline flex items-center gap-8 tablet:text-center max-tablet:pl-16">
+                    {logoData?.logo?.asset?.url && (
+                      <NextImage src={logoData.logo.asset.url} alt="Logo" width={50} height={50} priority />
+                    )}
+                    {navigationData?.logoText && <Paragraph as="span" colorScheme="light" className="hidden desktop:block">{navigationData.logoText}</Paragraph>}
+                  </NextLink>
+                  <HamburgerMenuButton onClick={() => setIsHamburgerMenuOpen(!isHamburgerMenuOpen)} className="px-16 tablet:hidden" isHamburgerMenuOpen={isHamburgerMenuOpen} />
+                  <div className={cn("z-10 max-tablet:fixed max-tablet:bottom-0 max-tablet:bg-dark max-tablet:h-[calc(100svh-var(--navigation-height-mobile))] max-tablet:w-full max-tablet:grid max-tablet:place-items-end max-tablet:pb-32 transition-transform duration-640 ease-navigation", isHamburgerMenuOpen ? "max-tablet:translate-x-0" : "max-tablet:translate-x-full")}>
+                    <ul id="navigation-menu" className="w-full flex flex-col tablet:flex-row tablet:items-center justify-center max-tablet:gap-40 gap-20 desktop:gap-40 max-tablet:text-right max-tablet:px-16">
+                      {transformedLinks.map((item) => {
+                        const href = getNavigationHref(item);
+                        return (
+                          <li key={item.page?._ref ?? item.url}>
+                            <Link href={href} tabIndex={isHamburgerMenuOpen ? undefined : -1}>{item.label}</Link>
+                          </li>
+                        );
+                      })}
+                      {navigationData?.contactButtonText && (
+                        <li className="max-tablet:w-full max-tablet:flex flex-1">
+                          {/* TODO: Add mail link from settings */}
+                          {contactButtonsData?.email && contactButtonsData.copyEmailTooltipText && (
+                            <ContactButtons className="max-tablet:w-full" copyEmailTooltipText={contactButtonsData.copyEmailTooltipText} contactEmail={contactButtonsData.email} contactButtonText={navigationData?.contactButtonText} />
+                          )}
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+            </header>
+          </GridItem>
+        </Grid>
+      </Container>
+    </Container>
+  );
+}
+
+function HamburgerMenuButton({ onClick, className, isHamburgerMenuOpen }: ComponentProps<"button"> & { isHamburgerMenuOpen: boolean }) {
+  return (
+    <Button variant="hamburger" aria-controls="navigation-menu" aria-expanded={isHamburgerMenuOpen} className={cn("flex flex-col gap-4 py-12", className)} onClick={onClick}>
+      <div className={cn("w-16 h-px bg-light transition-transform duration-640 ease-navigation", isHamburgerMenuOpen ? "rotate-45 translate-y-[5px]" : "rotate-0 translate-y-0")}></div>
+      <div className={cn("w-16 h-px bg-light transition-[transform,opacity] duration-640 ease-navigation", isHamburgerMenuOpen ? "opacity-0" : "opacity-100")}></div>
+      <div className={cn("w-16 h-px bg-light transition-transform duration-640 ease-navigation", isHamburgerMenuOpen ? "-rotate-45 -translate-y-[5px]" : "rotate-0 translate-y-0")}></div>
+    </Button>
   );
 }

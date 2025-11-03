@@ -1,12 +1,14 @@
 "use client";
 
 import { createDataAttribute } from "next-sanity";
+import { useRef } from "react";
 
 import type { PAGE_QUERYResult } from "@/sanity/types";
 
 import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { TextAndImage } from "@/components/modules/text-and-image";
+import { useInertWhenMenuOpen } from "@/hooks/use-inert-when-menu-open";
 import { createDataAttributeConfig } from "@/sanity/lib/data-attribute-config";
 
 type PageBuilderProps = {
@@ -28,7 +30,6 @@ function DragHandle({
 }) {
   return (
     <div
-      className="wrapper"
       data-sanity={createDataAttribute({
         ...createDataAttributeConfig,
         id: documentId,
@@ -48,9 +49,12 @@ export function PageBuilder({
 }: PageBuilderProps) {
   // Ensure content is an array
   const blocks = Array.isArray(modules) ? modules : [];
+  const mainRef = useRef<HTMLElement>(null);
+  useInertWhenMenuOpen(mainRef);
 
   return (
     <main
+      ref={mainRef}
       data-sanity={createDataAttribute({
         ...createDataAttributeConfig,
         id: documentId,
