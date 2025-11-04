@@ -38,11 +38,10 @@ export async function GET(request: Request) {
     notFound();
   }
 
-  // TODO: Specify a brand specific fallback color
   const vibrantBackground
-    = data?.image?.asset?.metadata?.palette?.vibrant?.background ?? "#3B82F6";
+    = data?.image?.asset?.metadata?.palette?.vibrant?.background ?? "#515750";
   const darkVibrantBackground
-    = data?.image?.asset?.metadata?.palette?.darkVibrant?.background ?? "#3B82F6";
+    = data?.image?.asset?.metadata?.palette?.darkVibrant?.background ?? "#515750";
 
   const text = data.title || "";
   const hasImage = data?.image?.asset?.url;

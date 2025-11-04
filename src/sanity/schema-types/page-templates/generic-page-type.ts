@@ -2,23 +2,24 @@ import { defineField, defineType } from "sanity";
 
 import { client } from "@/sanity/lib/client";
 import { basePageBuilder } from "@/sanity/schema-types/page-templates/base-page-builder";
-import { basePageType } from "@/sanity/schema-types/page-templates/base-page-type";
+
+import { basePageType } from "./base-page-type";
 
 export const apiVersion = process.env.SANITY_API_VERSION || "2025-03-26";
 
 export const studioClient = client.withConfig({ apiVersion });
 
-const homePageModules = ["textAndImage", "homepageHero"];
+const genericPageModules = ["textAndImage", "genericHero"];
 
-export const homePageType = defineType({
-  name: "homePage",
-  title: "Forside",
+export const genericPageType = defineType({
+  name: "genericPage",
+  title: "Generisk side",
   type: "document",
-  icon: () => "🏡",
+  icon: () => "📄",
   fields: [
     ...basePageType.fields,
     defineField({
-      ...basePageBuilder(homePageModules),
+      ...basePageBuilder(genericPageModules),
     }),
   ],
   preview: basePageType.preview,

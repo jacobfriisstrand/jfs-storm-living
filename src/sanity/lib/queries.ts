@@ -4,15 +4,7 @@ const IMAGE_QUERY = `{
   ...,
   alt,
   asset-> {
-    _id,
-    _type,
-    url,
-    dimensions {
-      _type,
-      aspectRatio,
-      height,
-      width
-    }
+    url
   }
 }`;
 
@@ -28,6 +20,29 @@ const SEO_QUERY = `
 const CONTENT_QUERY = `pageBuilder[]{
   ...,
   _type == "textAndImage" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
+,
+  _type == "homepageHero" => {
+    ...,
+    title,
+    description,
+    image ${IMAGE_QUERY},
+    buttons[]{
+      ...,
+      "label": select(label == null => undefined, label),
+      linkType,
+      url,
+      page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
+,
+  _type == "genericHero" => {
     ...,
     image ${IMAGE_QUERY}
   }
@@ -50,7 +65,33 @@ export const NOT_FOUND_PAGE_QUERY = defineQuery(`*[_id == "notFoundPage"][0]{
   subheading,
 }`);
 
+export const LOGO_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "logo": logo ${IMAGE_QUERY}
+}`);
+
+export const CONTACT_BUTTONS_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "email": contactInfo.email,
+  "copyEmailTooltipText": copyEmailTooltipText
+}`);
+
 export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"][0]{
+  ...,
+  logoText,
+  contactButtonText,
+  menu[]{
+    _type,
+    "label": select(label == null => undefined, label),
+    "linkType": select(linkType == null => undefined, linkType),
+    "url": select(url == null => undefined, url),
+    "page": page->{
+      _id,
+      _type,
+      "slug": slug.current
+    }
+  },
+}`);
+
+export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
   ...,
   menu[]{
     _type,
@@ -63,6 +104,24 @@ export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"][0]{
       "slug": slug.current
     }
   },
+  footerDisplayText
+}`);
+
+export const FOOTER_INFO_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "phone": contactInfo.phone,
+  "email": contactInfo.email,
+  "address": {
+    "streetName": address.streetName,
+    "streetNumber": address.streetNumber,
+    "floor": address.floor,
+    "zipCode": address.zipCode,
+    "city": address.city
+  },
+  "copyright": copyright,
+  "vatNumber": {
+    "vatNumberHeading": vatNumberObject.vatNumberHeading,
+    "vatNumber": vatNumberObject.vatNumber
+  }
 }`);
 
 export const HOME_PAGE_QUERY = defineQuery(`*[_id == "homePage"][0]{

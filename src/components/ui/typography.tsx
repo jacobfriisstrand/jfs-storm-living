@@ -17,10 +17,15 @@ export const headingVariants = cva("", {
       light: "text-light",
       dark: "text-dark",
     },
+    font: {
+      sans: "font-sans",
+      serif: "font-serif",
+    },
   },
   defaultVariants: {
     size: "h1",
     colorScheme: "light",
+    font: "serif",
   },
 });
 
@@ -34,6 +39,7 @@ function Heading({
   children,
   size,
   colorScheme,
+  font,
   ref,
   as = "h2",
   ...props
@@ -42,7 +48,7 @@ function Heading({
 
   return (
     <Component
-      className={cn(headingVariants({ size, colorScheme }), className)}
+      className={cn(headingVariants({ size, colorScheme, font }), className)}
       ref={ref}
       {...props}
     >
@@ -51,7 +57,7 @@ function Heading({
   );
 }
 
-export const paragraphVariants = cva("leading-110", {
+export const paragraphVariants = cva("leading-24 text-balance", {
   variants: {
     size: {
       default: "text-14 tablet:text-16",

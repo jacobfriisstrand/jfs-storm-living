@@ -95,7 +95,7 @@ import { PortableText } from "next-sanity";
 
 import type { PAGE_QUERYResult } from "@/sanity/types";
 
-import { SanityImage } from "@/components/core/sanity-image";
+import { Image } from "@/components/core/image";
 import { JSONLD } from "@/components/core/json-ld";
 
 ${jsonldFunction}
@@ -112,26 +112,14 @@ export function ${pascalCaseName}({
   const ${camelCaseName}Data = generate${pascalCaseName}Data({ _key, title, description, image, ...props });
 
   return (
-    <section className="mx-auto flex flex-col gap-8 py-16">
+    <section>
       <JSONLD data={${camelCaseName}Data} />
-      {title && (
-        <h2 className="text-3xl font-medium text-center">
-          {title}
-        </h2>
-      )}
+      {title && <h2>{title}</h2>}
       
-      <div className="max-w-4xl mx-auto">
-        {description && (
-          <div className="prose prose-lg mx-auto">
-            <PortableText value={description} />
-          </div>
-        )}
-        {image && (
-          <SanityImage
-            image={image}
-            className="max-w-2xl mx-auto"
-            aspectRatio={16 / 9}
-          />
+      <div>
+        {description && <PortableText value={description} />}
+        {image?.asset?.url && image.alt && (
+          <Image image={{ asset: { url: image.asset.url }, alt: image.alt }} />
         )}
         {/* Add your module content here */}
       </div>
@@ -145,27 +133,9 @@ function generateModuleQuery(config: ModuleConfig): string {
   const { name } = config;
   const camelCaseName = toCamelCase(name);
 
-  const IMAGE_QUERY = `{
-    ...,
-    alt,
-    asset-> {
-      _id,
-      _type,
-      url,
-      dimensions {
-        _type,
-        aspectRatio,
-        height,
-        width
-      }
-    }
-  }`;
-
   return `  _type == "${camelCaseName}" => {
     ...,
-    description,
-    "descriptionText": pt::text(description),
-    image ${IMAGE_QUERY}
+    image \${IMAGE_QUERY}
   }`;
 }
 

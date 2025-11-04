@@ -5,21 +5,33 @@ import { PAGE_TYPES } from "@/sanity/constants/page-types";
 export const navigationLinkType = defineType({
   name: "navigationLink",
   type: "object",
+  preview: {
+    select: {
+      title: "label",
+      linkType: "linkType",
+    },
+    prepare({ title, linkType }) {
+      return {
+        title: title || "Link uden label",
+        subtitle: linkType === "internal" ? "Intern link" : linkType === "external" ? "Ekstern link" : "",
+      };
+    },
+  },
   fields: [
     defineField({
       name: "label",
-      title: "Label",
-      description: "The text that will be displayed in the navigation",
+      title: "Etiket",
+      description: "Teksten der vises i linket / knappen",
       type: "string",
     }),
     defineField({
       name: "linkType",
-      title: "Link Type",
+      title: "Linktype",
       type: "string",
       options: {
         list: [
-          { title: "Internal", value: "internal" },
-          { title: "External", value: "external" },
+          { title: "Intern", value: "internal" },
+          { title: "Ekstern", value: "external" },
         ],
       },
     }),
@@ -27,11 +39,11 @@ export const navigationLinkType = defineType({
       name: "url",
       title: "URL",
       type: "url",
-      description: "Enter a valid URL starting with https:// (e.g., https://example.com)",
+      description: "Indtast en gyldig URL, der starter med https:// (f.eks. https://eksempel.dk)",
       validation: Rule => Rule.custom((value, context) => {
         const parent = context.parent as { linkType?: string };
         if (parent?.linkType === "external" && !value) {
-          return "URL is required for external links";
+          return "URL er påkrævet for eksterne links";
         }
         return true;
       }),
@@ -39,12 +51,12 @@ export const navigationLinkType = defineType({
     }),
     defineField({
       name: "page",
-      title: "Page",
+      title: "Side",
       type: "reference",
       validation: Rule => Rule.custom((value, context) => {
         const parent = context.parent as { linkType?: string };
         if (parent?.linkType === "internal" && !value) {
-          return "Page is required for internal links";
+          return "Side er påkrævet for interne links";
         }
         return true;
       }),

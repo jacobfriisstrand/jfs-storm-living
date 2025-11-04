@@ -2,6 +2,7 @@
   --transition-duration-*: initial;
   --ease-*: initial;
   --transition-property-*: initial;
+  --duration-*: initial;
 
   /* Durations */
   --transition-duration-fast: 150ms;
@@ -10,4 +11,5 @@
 
   /* Easings */
   --ease-in-out: cubic-bezier(0.77, 0, 0.18, 1);
+  --ease-navigation: cubic-bezier(0.65, 0.05, 0.36, 1);
 }

@@ -8,12 +8,14 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "border px-16 py-8 rounded-base focus-visible:focus-outline cursor-pointer active:scale-95 duration-normal",
+  "border px-24 text-center py-8 rounded-base focus-visible:focus-outline cursor-pointer active:scale-95 duration-normal",
   {
     variants: {
       variant: {
         primary: "bg-brand text-light border-light hover:bg-light hover:text-brand hover:border-brand",
         secondary: "bg-light text-brand border-brand hover:bg-brand hover:text-light",
+        hamburger: "bg-transparent text-light border-transparent active:scale-none p-0",
+        icon: "bg-transparent text-light border-transparent p-0",
       },
       size: {
         default: "text-sm",

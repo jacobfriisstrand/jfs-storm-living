@@ -7,11 +7,11 @@ export const structure: StructureResolver = S =>
   S.list()
     .title("Menu")
     .items([
-      S.divider().title("Pages"),
+      S.divider().title("Sider"),
       S.listItem()
         .id("homePage")
         .schemaType("homePage")
-        .title("Homepage")
+        .title("Forside")
         .child(
           S.editor()
             .id("homePage")
@@ -21,17 +21,25 @@ export const structure: StructureResolver = S =>
       // Dynamically add page types from PAGE_TYPES constant
       ...PAGE_TYPES
         .filter(pageType => pageType !== "homePage" && pageType !== "notFoundPage")
-        .map(pageType =>
-          S.documentTypeListItem(pageType).title(
-            pageType
+        .map((pageType) => {
+          // Custom title mapping for specific page types
+          const customTitles: Record<string, string> = {
+            genericPage: "Generisk side",
+            // Add more custom titles here as needed
+            // anotherPageType: "Custom Title",
+          };
+
+          const title = customTitles[pageType]
+            || pageType
               .replace(/([A-Z])/g, " $1") // Add space before capital letters
               .toLowerCase() // Convert to lowercase
-              .replace(/^./, str => str.toUpperCase()), // Capitalize first letter only
-          ),
-        ),
-      S.divider().title("Settings"),
+              .replace(/^./, str => str.toUpperCase()); // Capitalize first letter only
+
+          return S.documentTypeListItem(pageType).title(title);
+        }),
+      S.divider().title("Indstillinger"),
       S.listItem()
-        .title("Global settings")
+        .title("Globale indstillinger")
         .icon(() => "🔧")
         .child(
           S.editor()
@@ -50,18 +58,31 @@ export const structure: StructureResolver = S =>
             .documentId("navigation"),
         ),
       S.listItem()
-        .title("Not found page")
+        .title("Footer")
+        .icon(() => "👟")
+        .child(
+          S.editor()
+            .id("footer")
+            .schemaType("footer")
+            .title("Footer")
+            .documentId("footer"),
+        ),
+      S.listItem()
+        .title("Ikke fundet side")
         .icon(() => "🚨")
         .child(
           S.editor()
             .id("notFoundPage")
             .schemaType("notFoundPage")
-            .title("Not found page")
+            .title("Ikke fundet side")
             .documentId("notFoundPage"),
         ),
+      S.documentTypeListItem("redirect")
+        .title("Omdirigeringer")
+        .icon(() => "🔄"),
       ...S.documentTypeListItems().filter(
         item =>
           item.getId()
-          && !["globalSettings", "basePage", "homePage", "navigation", "notFoundPage", ...PAGE_TYPES].includes(item.getId()!),
+          && !["globalSettings", "basePage", "homePage", "navigation", "footer", "notFoundPage", "redirect", ...PAGE_TYPES].includes(item.getId()!),
       ),
     ]);

@@ -1,26 +1,21 @@
 import { defineField, defineType } from "sanity";
 
-export const textAndImageType = defineType({
-  name: "textAndImage",
+export const genericHeroType = defineType({
+  name: "genericHero",
+  title: "Generisk side hero",
   type: "object",
   fields: [
     defineField({
-      name: "orientation",
-      type: "string",
-      options: {
-        list: [
-          { value: "imageLeft", title: "Image Left" },
-          { value: "imageRight", title: "Image Right" },
-        ],
-      },
-    }),
-    defineField({
       name: "title",
+      title: "Titel",
       type: "string",
+      validation: Rule => Rule.required().error("Dette felt er påkrævet"),
     }),
     defineField({
       name: "image",
+      title: "Billede",
       type: "imageFieldType",
+      validation: Rule => Rule.required().error("Dette felt er påkrævet"),
     }),
   ],
   preview: {
@@ -31,7 +26,7 @@ export const textAndImageType = defineType({
     prepare({ title, media }) {
       return {
         title,
-        subtitle: "Text and Image",
+        subtitle: "Generisk side hero",
         media,
       };
     },

@@ -2,123 +2,120 @@ import { defineField, defineType } from "sanity";
 
 export const globalSettingsType = defineType({
   name: "globalSettings",
-  title: "Global Settings",
+  title: "Globale indstillinger",
   type: "document",
   icon: () => "⚙️",
   fields: [
     defineField({
       name: "companyName",
       type: "string",
-      title: "Company Name",
-      description: "The official name of the company. This will not be displayed anywhere on the website.",
+      title: "Firmanavn",
+      description: "Virksomhedens officielle navn. Dette vises alle steder hvor firmanavnet er nødvendigt.",
       validation: Rule => Rule.required(),
+    }),
+    defineField({
+      name: "logo",
+      type: "image",
+      title: "Logo",
+      validation: Rule => Rule.required(),
+      description: "Logo der bruges alle steder hvor logoet er nødvendigt.",
     }),
     defineField({
       name: "favicon",
       type: "image",
       title: "Favicon",
       validation: Rule => Rule.required(),
-      description: "Upload a square image (recommended size: 32x32 pixels) to use as the website favicon. This will appear in browser tabs and bookmarks.",
+      description: "Upload et kvadratisk billede (anbefalet størrelse: 32x32 pixels) til brug som favicon. Det vises i browsertabs og bogmærker.",
       options: {
         accept: "image/png, image/x-icon, image/svg+xml",
       },
     }),
     defineField({
+      name: "copyEmailTooltipText",
+      type: "string",
+      title: "Kopier e-mail tooltip tekst",
+      description: "Teksten der vises i tooltipen når e-mailen kopieres.",
+      validation: Rule => Rule.required().error("Dette felt er påkrævet"),
+      placeholder: "Kopier e-mail",
+    }),
+    defineField({
       name: "contactInfo",
       type: "object",
-      title: "Contact Info",
-      description: "This will be displayed in the navigation on mobile, as well as the footer.",
+      title: "Kontaktoplysninger",
+      description: "Dette vises alle steder hvor kontaktinformationer er nødvendige.",
       fields: [
         defineField({
           name: "phone",
           type: "string",
           validation: Rule => Rule.required(),
-          title: "Phone",
+          title: "Telefon",
         }),
         defineField({
           name: "email",
           type: "string",
           validation: Rule => Rule.required(),
-          title: "Email",
+          title: "E-mail",
         }),
       ],
     }),
     defineField({
       name: "address",
       type: "object",
-      title: "Address",
-      description: "This will be displayed in the footer.",
+      title: "Adresse",
+      description: "Dette vises i footeren.",
       validation: Rule => Rule.required(),
       fields: [
         defineField({
           name: "streetName",
           type: "string",
-          title: "Street name",
+          title: "Vejnavn",
         }),
         defineField({
           name: "streetNumber",
           type: "string",
-          title: "Street number",
+          title: "Husnummer",
         }),
         defineField({
           name: "floor",
           type: "string",
-          title: "Floor",
+          title: "Etage",
         }),
         defineField({
           name: "zipCode",
           type: "string",
-          title: "Zip code",
+          title: "Postnummer",
         }),
         defineField({
           name: "city",
           type: "string",
-          title: "City",
-        }),
-      ],
-    }),
-    defineField({
-      name: "socialLinks",
-      type: "object",
-      title: "Social links",
-      description: "Enter a valid URL starting with https:// (e.g., https://example.com)",
-      fields: [
-        defineField({
-          name: "instagram",
-          type: "url",
-          title: "Instagram",
-        }),
-        defineField({
-          name: "linkedIn",
-          type: "url",
-          title: "LinkedIn",
+          title: "By",
         }),
       ],
     }),
     defineField({
       name: "copyright",
       type: "string",
-      title: "Copyright text",
-      description: "This will be displayed in the footer.",
+      title: "Copyright-tekst",
+      description: "Dette vises i footeren.",
       validation: Rule => Rule.required(),
     }),
     defineField({
       name: "vatNumberObject",
       type: "object",
-      title: "VAT number",
-      description: "This will be displayed in the footer and wherever the VAT number is needed.",
+      title: "CVR-nummer",
+      description: "Dette vises i footeren og hvor CVR-nummeret ellers er nødvendigt.",
       validation: Rule => Rule.required(),
       fields: [
         defineField({
           name: "vatNumberHeading",
           type: "string",
-          title: "VAT Number Heading",
-          placeholder: "Example: 'CVR'",
+          title: "CVR-overskrift",
+          placeholder: "Eksempel: 'CVR'",
         }),
         defineField({
           name: "vatNumber",
           type: "string",
-          title: "VAT Number (CVR)",
+          title: "CVR-nummer",
         }),
       ],
     }),
@@ -127,7 +124,7 @@ export const globalSettingsType = defineType({
   preview: {
     prepare() {
       return {
-        title: "Global Settings",
+        title: "Globale indstillinger",
       };
     },
   },

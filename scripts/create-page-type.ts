@@ -283,6 +283,70 @@ function appendToQueriesFile(config: PageTypeConfig): void {
   console.warn("✅ Updated queries file");
 }
 
+function appendToStructureFile(config: PageTypeConfig): void {
+  const structurePath = join(process.cwd(), "src/sanity/structure.ts");
+  const camelCaseName = toCamelCase(config.name);
+
+  if (!existsSync(structurePath)) {
+    console.error("❌ Structure file not found");
+    return;
+  }
+
+  const content = readFileSync(structurePath, "utf-8");
+  const lines = content.split("\n");
+
+  // Find the customTitles object
+  const customTitlesStartIndex = lines.findIndex(line => line.includes("const customTitles: Record<string, string> = {"));
+  if (customTitlesStartIndex === -1) {
+    console.error("❌ Could not find customTitles object in structure file");
+    return;
+  }
+
+  // Find the closing bracket of the customTitles object
+  let customTitlesEndIndex = -1;
+  let braceCount = 0;
+  let inCustomTitles = false;
+
+  for (let i = customTitlesStartIndex; i < lines.length; i++) {
+    const line = lines[i];
+
+    for (const char of line) {
+      if (char === "{") {
+        braceCount++;
+        inCustomTitles = true;
+      }
+      if (char === "}") {
+        braceCount--;
+        if (braceCount === 0 && inCustomTitles) {
+          customTitlesEndIndex = i;
+          break;
+        }
+      }
+    }
+    if (customTitlesEndIndex !== -1)
+      break;
+  }
+
+  if (customTitlesEndIndex === -1) {
+    console.error("❌ Could not find closing bracket of customTitles object");
+    return;
+  }
+
+  // Check if the page type already exists in customTitles
+  const existingEntry = lines.find(line => line.includes(`"${camelCaseName}":`));
+  if (existingEntry) {
+    console.warn(`⚠️  Custom title for "${camelCaseName}" already exists, skipping structure update`);
+    return;
+  }
+
+  // Add the new custom title entry before the closing bracket
+  const newEntry = `            ${camelCaseName}: "${config.title}",`;
+  lines.splice(customTitlesEndIndex, 0, newEntry);
+
+  writeFileSync(structurePath, lines.join("\n"));
+  console.warn("✅ Updated structure file with custom title");
+}
+
 function promptForInput(question: string): Promise<string> {
   return new Promise((resolve) => {
     const rl = createInterface({
@@ -441,7 +505,7 @@ async function main() {
     }
 
     // Get title
-    const title = await promptForInput(`Enter display title (default: "${name}"): `) || name;
+    const title = await promptForInput(`Enter display title for Sanity Studio (default: "${name}"): `) || name;
 
     // Get modules
     const modules = await promptForModules();
@@ -463,7 +527,7 @@ async function main() {
 
     console.warn("\n📋 Configuration:");
     console.warn(`  Name: ${name}`);
-    console.warn(`  Title: ${title}`);
+    console.warn(`  Title: ${title} (used in schema and structure)`);
     console.warn(`  Modules: ${modules.join(", ")}`);
     console.warn(`  Icon: ${icon}`);
 
@@ -490,6 +554,7 @@ async function main() {
     appendToSchemaIndex(config);
     appendToPageTypesConstant(config);
     appendToQueriesFile(config);
+    appendToStructureFile(config);
 
     console.warn("\n🎉 Page type created successfully!");
 
