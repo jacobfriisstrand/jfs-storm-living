@@ -1,4 +1,9 @@
-import type { WebPageElement, WithContext } from "schema-dts";
+import type {
+  EntryPoint,
+  ReadAction,
+  WebPageElement,
+  WithContext,
+} from "schema-dts";
 
 import { ArrowRightIcon } from "lucide-react";
 import { PortableText } from "next-sanity";
@@ -16,11 +21,33 @@ import { getNavigationHref, transformNavigationLinks } from "@/lib/utils/transfo
 import { components } from "@/sanity/rich-text-components";
 
 function generateTextAndLinkBlockData(props: TextAndLinkBlockProps): WithContext<WebPageElement> {
+  const { _key, title, link } = props;
+
+  const transformedLink = transformNavigationLinks([link as InputLink]);
+  const href = link ? getNavigationHref(transformedLink[0]) : undefined;
+
+  const action: ReadAction | undefined = href && transformedLink[0]?.label
+    ? {
+        "@type": "ReadAction",
+        "name": transformedLink[0].label,
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": href,
+        } as EntryPoint,
+      }
+    : undefined;
+
   return {
     "@context": "https://schema.org",
     "@type": "WebPageElement",
-    "name": props.title || "Tekst og link blok",
-    "description": "Tekst og link blok module content",
+    "@id": `#text-and-link-block-${_key ?? "primary"}`,
+    "name": title || "Tekst og link blok",
+    "description": title
+      ? `Tekst og link blok: ${title}`
+      : "Tekst og link blok module content",
+    "isPartOf": { "@id": "#webpage" },
+    "mainEntityOfPage": { "@id": "#webpage" },
+    ...(action ? { potentialAction: action } : {}),
   };
 }
 

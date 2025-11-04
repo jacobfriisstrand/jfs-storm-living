@@ -4,6 +4,7 @@ import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
 import { footerType } from "@/sanity/schema-types/modules/footer-type";
 import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type";
 import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
+import { listModuleType } from "@/sanity/schema-types/modules/list-module-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
 import { textAndLinkBlockType } from "@/sanity/schema-types/modules/text-and-link-block-type";
@@ -41,4 +42,5 @@ export const schema: SchemaTypeDefinition[] = [
   homepageHeroType,
   genericHeroType,
   textAndLinkBlockType,
+  listModuleType,
 ];
