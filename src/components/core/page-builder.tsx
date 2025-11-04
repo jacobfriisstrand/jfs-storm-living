@@ -7,6 +7,7 @@ import type { PAGE_QUERYResult } from "@/sanity/types";
 
 import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
+import { ListModule } from "@/components/modules/list-module";
 import { TextAndImage } from "@/components/modules/text-and-image";
 import { TextAndLinkBlock } from "@/components/modules/text-and-link-block";
 import { useInertWhenMenuOpen } from "@/hooks/use-inert-when-menu-open";
@@ -88,6 +89,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <TextAndLinkBlock {...block} />
+              </DragHandle>
+            );
+          case "listModule":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <ListModule {...block} />
               </DragHandle>
             );
           default:
