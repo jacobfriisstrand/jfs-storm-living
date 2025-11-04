@@ -9,7 +9,7 @@ export const apiVersion = process.env.SANITY_API_VERSION || "2025-03-26";
 
 export const studioClient = client.withConfig({ apiVersion });
 
-const genericPageModules = ["textAndImage", "genericHero"];
+const genericPageModules = ["textAndImage", "genericHero", "textAndLinkBlock"];
 
 export const genericPageType = defineType({
   name: "genericPage",
