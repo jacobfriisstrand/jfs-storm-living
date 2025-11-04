@@ -27,7 +27,7 @@ export const navigationType = defineType({
       description: "Links til navigationslinjen.",
       type: "array",
       of: [{ type: "navigationLink" }],
-      validation: Rule => Rule.required().max(6).error("Max 5 links er tilladt"),
+      validation: Rule => Rule.required().max(6).error("Max 6 links er tilladt"),
     }),
     defineField({
       name: "contactButtonText",

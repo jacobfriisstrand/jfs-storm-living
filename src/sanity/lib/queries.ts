@@ -91,6 +91,39 @@ export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"][0]{
   },
 }`);
 
+export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
+  ...,
+  menu[]{
+    _type,
+    "label": select(label == null => undefined, label),
+    "linkType": select(linkType == null => undefined, linkType),
+    "url": select(url == null => undefined, url),
+    "page": page->{
+      _id,
+      _type,
+      "slug": slug.current
+    }
+  },
+  footerDisplayText
+}`);
+
+export const FOOTER_INFO_QUERY = defineQuery(`*[_type == "globalSettings"][0]{
+  "phone": contactInfo.phone,
+  "email": contactInfo.email,
+  "address": {
+    "streetName": address.streetName,
+    "streetNumber": address.streetNumber,
+    "floor": address.floor,
+    "zipCode": address.zipCode,
+    "city": address.city
+  },
+  "copyright": copyright,
+  "vatNumber": {
+    "vatNumberHeading": vatNumberObject.vatNumberHeading,
+    "vatNumber": vatNumberObject.vatNumber
+  }
+}`);
+
 export const HOME_PAGE_QUERY = defineQuery(`*[_id == "homePage"][0]{
     ...,
     ${SEO_QUERY}

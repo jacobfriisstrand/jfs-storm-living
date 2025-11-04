@@ -5,6 +5,18 @@ import { PAGE_TYPES } from "@/sanity/constants/page-types";
 export const navigationLinkType = defineType({
   name: "navigationLink",
   type: "object",
+  preview: {
+    select: {
+      title: "label",
+      linkType: "linkType",
+    },
+    prepare({ title, linkType }) {
+      return {
+        title: title || "Link uden label",
+        subtitle: linkType === "internal" ? "Intern link" : linkType === "external" ? "Ekstern link" : "",
+      };
+    },
+  },
   fields: [
     defineField({
       name: "label",

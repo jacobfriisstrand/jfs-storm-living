@@ -58,6 +58,16 @@ export const structure: StructureResolver = S =>
             .documentId("navigation"),
         ),
       S.listItem()
+        .title("Footer")
+        .icon(() => "👟")
+        .child(
+          S.editor()
+            .id("footer")
+            .schemaType("footer")
+            .title("Footer")
+            .documentId("footer"),
+        ),
+      S.listItem()
         .title("Ikke fundet side")
         .icon(() => "🚨")
         .child(
@@ -73,6 +83,6 @@ export const structure: StructureResolver = S =>
       ...S.documentTypeListItems().filter(
         item =>
           item.getId()
-          && !["globalSettings", "basePage", "homePage", "navigation", "notFoundPage", "redirect", ...PAGE_TYPES].includes(item.getId()!),
+          && !["globalSettings", "basePage", "homePage", "navigation", "footer", "notFoundPage", "redirect", ...PAGE_TYPES].includes(item.getId()!),
       ),
     ]);
