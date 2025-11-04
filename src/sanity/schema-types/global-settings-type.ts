@@ -93,24 +93,6 @@ export const globalSettingsType = defineType({
       ],
     }),
     defineField({
-      name: "socialLinks",
-      type: "object",
-      title: "Sociale links",
-      description: "Indtast en gyldig URL, der starter med https:// (f.eks. https://eksempel.dk)",
-      fields: [
-        defineField({
-          name: "instagram",
-          type: "url",
-          title: "Instagram",
-        }),
-        defineField({
-          name: "linkedIn",
-          type: "url",
-          title: "LinkedIn",
-        }),
-      ],
-    }),
-    defineField({
       name: "copyright",
       type: "string",
       title: "Copyright-tekst",
