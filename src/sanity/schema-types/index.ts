@@ -6,6 +6,7 @@ import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type
 import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
+import { textAndLinkBlockType } from "@/sanity/schema-types/modules/text-and-link-block-type";
 import { basePageType } from "@/sanity/schema-types/page-templates/base-page-type";
 import { genericPageType } from "@/sanity/schema-types/page-templates/generic-page-type";
 import { homePageType } from "@/sanity/schema-types/page-templates/home-page-type";
@@ -39,4 +40,5 @@ export const schema: SchemaTypeDefinition[] = [
   genericPageType,
   homepageHeroType,
   genericHeroType,
+  textAndLinkBlockType,
 ];

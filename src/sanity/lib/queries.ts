@@ -46,6 +46,19 @@ const CONTENT_QUERY = `pageBuilder[]{
     ...,
     image ${IMAGE_QUERY}
   }
+,
+  _type == "textAndLinkBlock" => {
+    ...,
+    link {
+      ...,
+      "url": select(url == null => undefined, url),
+      "page": page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.

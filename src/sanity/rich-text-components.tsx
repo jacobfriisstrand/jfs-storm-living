@@ -4,11 +4,11 @@ import { Image } from "@/components/core/image";
 
 export const components: PortableTextComponents = {
   types: {
-    image: props =>
+    imageFieldType: props =>
       props.value
         ? (
             <Image
-              className="not-prose w-full h-auto"
+              className="not-prose aspect-square w-auto h-auto object-cover my-16"
               image={props.value}
             />
           )

@@ -7,7 +7,7 @@ import { Paragraph } from "@/components/ui/typography";
 import { useTouch } from "@/contexts/touch-context";
 import { cn } from "@/lib/utils";
 
-function ContactButtons({ contactEmail, contactButtonText, copyEmailTooltipText, className }: { contactEmail: string; contactButtonText: string; copyEmailTooltipText: string; className?: string }) {
+function ContactButtons({ contactEmail, contactButtonText, copyEmailTooltipText, className, isHamburgerMenuOpen }: { contactEmail: string; contactButtonText: string; copyEmailTooltipText: string; className?: string; isHamburgerMenuOpen: boolean }) {
   const [copied, setCopied] = useState(false);
   const isTouch = useTouch();
 
@@ -23,7 +23,7 @@ function ContactButtons({ contactEmail, contactButtonText, copyEmailTooltipText,
   };
 
   const copyButton = (
-    <Button variant="icon" onClick={handleCopy} className="relative flex place-items-center focus-visible:outline-light" aria-label={copied ? "E-mail kopieret" : "Kopier e-mail"}>
+    <Button variant="icon" onClick={handleCopy} className="relative flex place-items-center focus-visible:outline-light" aria-label={copied ? "E-mail kopieret" : "Kopier e-mail"} tabIndex={isHamburgerMenuOpen ? undefined : -1}>
       <span className="relative inline-flex items-center justify-center w-16 h-16">
         <CopyIcon
           size={16}
@@ -45,7 +45,7 @@ function ContactButtons({ contactEmail, contactButtonText, copyEmailTooltipText,
 
   return (
     <div className={cn("flex items-center gap-8", className)}>
-      <Button size="small" variant="secondary" href={`mailto:${contactEmail}`} className="w-full focus-visible:outline-light whitespace-nowrap">{contactButtonText}</Button>
+      <Button size="small" variant="secondary" href={`mailto:${contactEmail}`} className="w-full focus-visible:outline-light whitespace-nowrap" tabIndex={isHamburgerMenuOpen ? undefined : -1}>{contactButtonText}</Button>
       {isTouch === true
         ? (
             copyButton

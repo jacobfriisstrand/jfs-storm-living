@@ -11,5 +11,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --navigation-height-mobile: 82px;
+  --navigation-height-mobile: 66px;
+
+  --navigation-height-desktop: 88px;
 }
