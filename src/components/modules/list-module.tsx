@@ -81,7 +81,7 @@ export function ListModule({
             )}
           </GridItem>
           <GridItem className="tablet:col-span-7 tablet:col-start-6 flex items-center max-tablet:justify-center">
-            <ul className="flex flex-col gap-28">
+            <ul className="flex flex-col gap-28 tablet:gap-44">
               {items?.map(item => (
                 item?.title && item?.description
                   ? (
