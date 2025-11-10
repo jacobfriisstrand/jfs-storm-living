@@ -1,6 +1,7 @@
 import type { SchemaTypeDefinition } from "sanity";
 
 import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
+import { ctaBlockType } from "@/sanity/schema-types/modules/cta-block-type";
 import { featureListType } from "@/sanity/schema-types/modules/feature-list-type";
 import { footerType } from "@/sanity/schema-types/modules/footer-type";
 import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type";
@@ -17,7 +18,7 @@ import { notFoundPageType } from "@/sanity/schema-types/page-templates/not-found
 import { imageFieldType } from "@/sanity/schema-types/utilities/image-field-type";
 import { navigationLinkType } from "@/sanity/schema-types/utilities/navigation-link-type";
 import { redirectType } from "@/sanity/schema-types/utilities/redirect-type";
-import { richTextType } from "@/sanity/schema-types/utilities/rich-text-type";
+import { richTextNoImagesType, richTextType } from "@/sanity/schema-types/utilities/rich-text-type";
 import { seoType } from "@/sanity/schema-types/utilities/seo-type";
 
 export const schema: SchemaTypeDefinition[] = [
@@ -26,6 +27,7 @@ export const schema: SchemaTypeDefinition[] = [
   seoType,
   imageFieldType,
   richTextType,
+  richTextNoImagesType,
 
   // Module types
   textAndImageType,
@@ -47,4 +49,5 @@ export const schema: SchemaTypeDefinition[] = [
   listModuleType,
   featureListType,
   quoteModuleType,
+  ctaBlockType,
 ];

@@ -53,7 +53,7 @@ export function QuoteModule({
           <GridItem className="flex flex-col gap-20 tablet:col-span-6">
             <QuoteSymbol />
             <blockquote>
-              {quote && <Paragraph as="span" className={cn(headingVariants({ size: "h4", colorScheme: "dark" }), "italic font-serif leading-48")}>{quote}</Paragraph>}
+              {quote && <Paragraph as="span" className={cn(headingVariants({ size: "h4", colorScheme: "dark" }), "italic font-serif leading-32 tablet:leading-48")}>{quote}</Paragraph>}
             </blockquote>
             <QuoteSymbol className="self-end" />
           </GridItem>

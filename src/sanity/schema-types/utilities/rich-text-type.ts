@@ -13,12 +13,10 @@ import { Paragraph } from "@/components/ui/typography";
  *  }
  */
 
-export const richTextType = defineType({
-  title: "Rich Text",
-  name: "richText",
-  type: "array",
-  description: "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
-  of: [
+function createRichTextType(options?: { allowImages?: boolean; name?: string; title?: string }) {
+  const { allowImages = true, name = "richText", title = "Rich Text" } = options ?? {};
+
+  const of: ReturnType<typeof defineArrayMember>[] = [
     defineArrayMember({
       type: "block",
       // Styles let you define what blocks can be marked up as. The default
@@ -58,23 +56,44 @@ export const richTextType = defineType({
         ],
       },
     }),
-    // You can add additional types here. Note that you can't use
-    // primitive types such as 'string' and 'number' in the same array
-    // as a block type.
-    defineArrayMember({
-      type: "imageFieldType",
-      title: "Billede",
-      preview: {
-        select: {
-          title: "title",
-          media: "image",
+  ];
+
+  // Conditionally add image type if allowed
+  if (allowImages) {
+    of.push(
+      defineArrayMember({
+        type: "imageFieldType",
+        title: "Billede",
+        preview: {
+          select: {
+            title: "title",
+            media: "image",
+          },
+          prepare({ media }) {
+            return {
+              media,
+            };
+          },
         },
-        prepare({ media }) {
-          return {
-            media,
-          };
-        },
-      },
-    }),
-  ],
+      }),
+    );
+  }
+
+  return defineType({
+    title,
+    name,
+    type: "array",
+    description: "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
+    of,
+  });
+}
+
+// Default rich text type with images enabled (for backward compatibility)
+export const richTextType = createRichTextType({ allowImages: true });
+
+// Rich text type without images
+export const richTextNoImagesType = createRichTextType({
+  allowImages: false,
+  name: "richTextNoImages",
+  title: "Rich Text (No Images)",
 });
