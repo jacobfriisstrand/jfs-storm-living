@@ -81,6 +81,20 @@ const CONTENT_QUERY = `pageBuilder[]{
   _type == "quoteModule" => {
     ...,
   }
+,
+  _type == "ctaBlock" => {
+    ...,
+    image ${IMAGE_QUERY},
+    link {
+      ...,
+      "url": select(url == null => undefined, url),
+      "page": page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.

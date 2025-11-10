@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 import type { PAGE_QUERYResult } from "@/sanity/types";
 
+import { CtaBlock } from "@/components/modules/cta-block";
 import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
@@ -109,6 +110,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <QuoteModule {...block} />
+              </DragHandle>
+            );
+          case "ctaBlock":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <CtaBlock {...block} />
               </DragHandle>
             );
           default:
