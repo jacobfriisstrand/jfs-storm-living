@@ -1,6 +1,7 @@
 import type { SchemaTypeDefinition } from "sanity";
 
 import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
+import { featureListType } from "@/sanity/schema-types/modules/feature-list-type";
 import { footerType } from "@/sanity/schema-types/modules/footer-type";
 import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type";
 import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
@@ -43,4 +44,5 @@ export const schema: SchemaTypeDefinition[] = [
   genericHeroType,
   textAndLinkBlockType,
   listModuleType,
+  featureListType,
 ];

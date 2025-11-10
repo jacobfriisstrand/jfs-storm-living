@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+import { Paragraph } from "@/components/ui/typography";
+
 /**
  * This is the schema type for block content used in the post document type
  * Importing this type into the studio configuration's `schema` property
@@ -15,6 +17,7 @@ export const richTextType = defineType({
   title: "Rich Text",
   name: "richText",
   type: "array",
+  description: "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
   of: [
     defineArrayMember({
       type: "block",
@@ -23,7 +26,7 @@ export const richTextType = defineType({
       // you want, and decide how you want to deal with it where you want to
       // use your content.
       styles: [
-        { title: "Normal", value: "normal" },
+        { title: "Normal", value: "normal", component: Paragraph },
         { title: "H2", value: "h2" },
         { title: "H3", value: "h3" },
         { title: "H4", value: "h4" },

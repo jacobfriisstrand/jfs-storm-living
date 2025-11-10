@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 import type { PAGE_QUERYResult } from "@/sanity/types";
 
+import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { ListModule } from "@/components/modules/list-module";
@@ -95,6 +96,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <ListModule {...block} />
+              </DragHandle>
+            );
+          case "featureList":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <FeatureList {...block} />
               </DragHandle>
             );
           default:

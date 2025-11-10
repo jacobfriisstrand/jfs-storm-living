@@ -32,4 +32,8 @@
   --text-4xl: 2.75rem; /* 44px */
   --text-5xl: 1.75rem; /* 28px */
   --text-6xl: 4.25rem; /* 68px */
+
+  /* Tracking */
+  --tracking-tight: -2px;
+  --tracking-normal: 0;
 }
