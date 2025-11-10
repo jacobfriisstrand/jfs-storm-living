@@ -77,6 +77,10 @@ const CONTENT_QUERY = `pageBuilder[]{
       }
     }
   }
+,
+  _type == "quoteModule" => {
+    ...,
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.

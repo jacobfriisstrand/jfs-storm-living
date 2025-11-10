@@ -9,6 +9,7 @@ import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { ListModule } from "@/components/modules/list-module";
+import { QuoteModule } from "@/components/modules/quote-module";
 import { TextAndImage } from "@/components/modules/text-and-image";
 import { TextAndLinkBlock } from "@/components/modules/text-and-link-block";
 import { useInertWhenMenuOpen } from "@/hooks/use-inert-when-menu-open";
@@ -102,6 +103,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <FeatureList {...block} />
+              </DragHandle>
+            );
+          case "quoteModule":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <QuoteModule {...block} />
               </DragHandle>
             );
           default:
