@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-export const headingVariants = cva("", {
+export const headingVariants = cva("tracking-tight", {
   variants: {
     size: {
       h1: "text-5xl tablet:text-6xl leading-none",
@@ -60,7 +60,7 @@ function Heading({
 export const paragraphVariants = cva("leading-24 text-balance", {
   variants: {
     size: {
-      default: "text-14 tablet:text-16",
+      default: "text-xs tablet:text-sm",
     },
     colorScheme: {
       light: "text-light",

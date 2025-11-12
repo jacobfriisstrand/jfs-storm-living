@@ -16,6 +16,7 @@ export const imageOverlayVariants = cva("absolute inset-0", {
       fromTop: "bg-linear-to-b to-75%",
       fromLeft: "bg-linear-to-l to-75%",
       fromRight: "bg-linear-to-r to-75%",
+      none: "",
     },
   },
   defaultVariants: {

@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+import { Paragraph } from "@/components/ui/typography";
+
 /**
  * This is the schema type for block content used in the post document type
  * Importing this type into the studio configuration's `schema` property
@@ -11,19 +13,34 @@ import { defineArrayMember, defineField, defineType } from "sanity";
  *  }
  */
 
-export const richTextType = defineType({
-  title: "Rich Text",
-  name: "richText",
-  type: "array",
-  of: [
+function createRichTextType(options?: { allowImages?: boolean; name?: string; title?: string; allowContactReferences?: boolean }) {
+  const { allowImages = true, name = "richText", title = "Rich Text", allowContactReferences = false } = options ?? {};
+
+  // Define inline blocks for contact references
+  const inlineBlocks: ReturnType<typeof defineArrayMember>[] = [];
+
+  if (allowContactReferences) {
+    inlineBlocks.push(
+      defineArrayMember({
+        type: "emailReference",
+      }),
+      defineArrayMember({
+        type: "phoneReference",
+      }),
+    );
+  }
+
+  const of: ReturnType<typeof defineArrayMember>[] = [
     defineArrayMember({
       type: "block",
+      // Add inline blocks if contact references are enabled
+      ...(allowContactReferences && inlineBlocks.length > 0 && { of: inlineBlocks }),
       // Styles let you define what blocks can be marked up as. The default
       // set corresponds with HTML tags, but you can set any title or value
       // you want, and decide how you want to deal with it where you want to
       // use your content.
       styles: [
-        { title: "Normal", value: "normal" },
+        { title: "Normal", value: "normal", component: Paragraph },
         { title: "H2", value: "h2" },
         { title: "H3", value: "h3" },
         { title: "H4", value: "h4" },
@@ -55,23 +72,48 @@ export const richTextType = defineType({
         ],
       },
     }),
-    // You can add additional types here. Note that you can't use
-    // primitive types such as 'string' and 'number' in the same array
-    // as a block type.
-    defineArrayMember({
-      type: "imageFieldType",
-      title: "Billede",
-      preview: {
-        select: {
-          title: "title",
-          media: "image",
+  ];
+
+  // Conditionally add image type if allowed
+  if (allowImages) {
+    of.push(
+      defineArrayMember({
+        type: "imageFieldType",
+        title: "Billede",
+        preview: {
+          select: {
+            title: "title",
+            media: "image",
+          },
+          prepare({ media }) {
+            return {
+              media,
+            };
+          },
         },
-        prepare({ media }) {
-          return {
-            media,
-          };
-        },
-      },
-    }),
-  ],
+      }),
+    );
+  }
+
+  return defineType({
+    title,
+    name,
+    type: "array",
+    description: "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
+    of,
+  });
+}
+
+// Default rich text type with images enabled (for backward compatibility)
+export const richTextType = createRichTextType({
+  allowImages: true,
+  allowContactReferences: true,
+});
+
+// Rich text type without images
+export const richTextNoImagesType = createRichTextType({
+  allowImages: false,
+  name: "richTextNoImages",
+  title: "Rich Text (No Images)",
+  allowContactReferences: true,
 });

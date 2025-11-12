@@ -8,7 +8,8 @@ import { urlFor } from "@/sanity/lib/image";
 type Props = Omit<NextImageProps, "src" | "alt"> & {
   image: {
     asset?: {
-      url: string;
+      url?: string;
+      _ref?: string;
     };
     alt: string;
   };
@@ -20,7 +21,7 @@ function Image({
   sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
   ...props
 }: Props) {
-  if (!image?.asset?.url || !image.alt)
+  if ((!image?.asset?.url && !image?.asset?._ref) || !image.alt)
     return null;
 
   const imageUrl = urlFor(image)

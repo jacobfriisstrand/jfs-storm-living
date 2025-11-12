@@ -17,6 +17,26 @@ const SEO_QUERY = `
   },
 `;
 
+// Fragment for resolving inline contact references in rich text fields
+const INLINE_CONTACT_REFERENCES = `
+  _type == "block" => {
+    ...,
+    children[]{
+      ...,
+      _type == "emailReference" => {
+        _type,
+        _key,
+        "email": globalSettings->.contactInfo.email
+      },
+      _type == "phoneReference" => {
+        _type,
+        _key,
+        "phone": globalSettings->.contactInfo.phone
+      }
+    }
+  }
+`;
+
 const CONTENT_QUERY = `pageBuilder[]{
   ...,
   _type == "textAndImage" => {
@@ -43,6 +63,99 @@ const CONTENT_QUERY = `pageBuilder[]{
   }
 ,
   _type == "genericHero" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
+,
+  _type == "textAndLinkBlock" => {
+    ...,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
+    link {
+      ...,
+      "url": select(url == null => undefined, url),
+      "page": page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
+,
+  _type == "listModule" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
+,
+  _type == "featureList" => {
+    ...,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
+    link {
+      ...,
+      "url": select(url == null => undefined, url),
+      "page": page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
+,
+  _type == "quoteModule" => {
+    ...,
+  }
+,
+  _type == "ctaBlock" => {
+    ...,
+    image ${IMAGE_QUERY},
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
+    link {
+      ...,
+      "url": select(url == null => undefined, url),
+      "page": page->{
+        _id,
+        _type,
+        "slug": slug.current
+      }
+    }
+  }
+,
+  _type == "contactModule" => {
+    ...,
+    contactButtonText,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    }
+  }
+,
+  _type == "richTextModule" => {
+    ...,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    }
+  }
+,
+  _type == "gridModule" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
+,
+  _type == "imageGrid" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
+,
+  _type == "priceListModule" => {
     ...,
     image ${IMAGE_QUERY}
   }

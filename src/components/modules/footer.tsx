@@ -20,7 +20,7 @@ export default function Footer({ footerData, footerInfoData }: { footerData: FOO
   const transformedLinks = transformNavigationLinks(footerData?.menu);
 
   return (
-    <Container className="py-20">
+    <Container className="py-20 mt-80 tablet:mt-180">
       <footer ref={footerRef}>
         <Grid className="gap-y-32 tablet:gap-y-60">
           <GridItem className="flex justify-between *:w-44">

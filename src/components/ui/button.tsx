@@ -18,7 +18,7 @@ const buttonVariants = cva(
         icon: "bg-transparent text-light border-transparent p-0",
       },
       size: {
-        default: "text-sm",
+        default: "text-xs tablet:text-sm",
         small: "text-xs",
       },
     },
@@ -54,7 +54,7 @@ function Button({
     return (
       <Link
         data-slot="button"
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size }), "grid place-items-center", className)}
         href={href}
         {...(props as Omit<React.ComponentProps<typeof Link>, "href">)}
       />
@@ -66,7 +66,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size }), className)}
       {...(props as React.ComponentProps<"button">)}
     />
   );
