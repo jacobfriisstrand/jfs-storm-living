@@ -10,6 +10,7 @@ import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-ty
 import { listModuleType } from "@/sanity/schema-types/modules/list-module-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { quoteModuleType } from "@/sanity/schema-types/modules/quote-module-type";
+import { richTextModuleType } from "@/sanity/schema-types/modules/rich-text-module-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
 import { textAndLinkBlockType } from "@/sanity/schema-types/modules/text-and-link-block-type";
 import { basePageType } from "@/sanity/schema-types/page-templates/base-page-type";
@@ -55,4 +56,5 @@ export const schema: SchemaTypeDefinition[] = [
   quoteModuleType,
   ctaBlockType,
   contactModuleType,
+  richTextModuleType,
 ];

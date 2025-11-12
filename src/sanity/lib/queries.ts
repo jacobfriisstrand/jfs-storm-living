@@ -47,10 +47,7 @@ const CONTENT_QUERY = `pageBuilder[]{
   _type == "homepageHero" => {
     ...,
     title,
-    description[]{
-      ...,
-      ${INLINE_CONTACT_REFERENCES}
-    },
+    description,
     image ${IMAGE_QUERY},
     buttons[]{
       ...,
@@ -72,6 +69,10 @@ const CONTENT_QUERY = `pageBuilder[]{
 ,
   _type == "textAndLinkBlock" => {
     ...,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
     link {
       ...,
       "url": select(url == null => undefined, url),
@@ -90,6 +91,10 @@ const CONTENT_QUERY = `pageBuilder[]{
 ,
   _type == "featureList" => {
     ...,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
     link {
       ...,
       "url": select(url == null => undefined, url),
@@ -108,6 +113,10 @@ const CONTENT_QUERY = `pageBuilder[]{
   _type == "ctaBlock" => {
     ...,
     image ${IMAGE_QUERY},
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
     link {
       ...,
       "url": select(url == null => undefined, url),
@@ -122,6 +131,14 @@ const CONTENT_QUERY = `pageBuilder[]{
   _type == "contactModule" => {
     ...,
     contactButtonText,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    }
+  }
+,
+  _type == "richTextModule" => {
+    ...,
     description[]{
       ...,
       ${INLINE_CONTACT_REFERENCES}
