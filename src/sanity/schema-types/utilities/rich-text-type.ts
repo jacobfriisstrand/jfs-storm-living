@@ -13,12 +13,28 @@ import { Paragraph } from "@/components/ui/typography";
  *  }
  */
 
-function createRichTextType(options?: { allowImages?: boolean; name?: string; title?: string }) {
-  const { allowImages = true, name = "richText", title = "Rich Text" } = options ?? {};
+function createRichTextType(options?: { allowImages?: boolean; name?: string; title?: string; allowContactReferences?: boolean }) {
+  const { allowImages = true, name = "richText", title = "Rich Text", allowContactReferences = false } = options ?? {};
+
+  // Define inline blocks for contact references
+  const inlineBlocks: ReturnType<typeof defineArrayMember>[] = [];
+
+  if (allowContactReferences) {
+    inlineBlocks.push(
+      defineArrayMember({
+        type: "emailReference",
+      }),
+      defineArrayMember({
+        type: "phoneReference",
+      }),
+    );
+  }
 
   const of: ReturnType<typeof defineArrayMember>[] = [
     defineArrayMember({
       type: "block",
+      // Add inline blocks if contact references are enabled
+      ...(allowContactReferences && inlineBlocks.length > 0 && { of: inlineBlocks }),
       // Styles let you define what blocks can be marked up as. The default
       // set corresponds with HTML tags, but you can set any title or value
       // you want, and decide how you want to deal with it where you want to
@@ -89,11 +105,15 @@ function createRichTextType(options?: { allowImages?: boolean; name?: string; ti
 }
 
 // Default rich text type with images enabled (for backward compatibility)
-export const richTextType = createRichTextType({ allowImages: true });
+export const richTextType = createRichTextType({
+  allowImages: true,
+  allowContactReferences: true,
+});
 
 // Rich text type without images
 export const richTextNoImagesType = createRichTextType({
   allowImages: false,
   name: "richTextNoImages",
   title: "Rich Text (No Images)",
+  allowContactReferences: true,
 });
