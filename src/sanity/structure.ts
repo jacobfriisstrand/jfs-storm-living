@@ -24,7 +24,7 @@ export const structure: StructureResolver = S =>
         .map((pageType) => {
           // Custom title mapping for specific page types
           const customTitles: Record<string, string> = {
-            genericPage: "Generisk side",
+            genericPage: "Alle sider",
             // Add more custom titles here as needed
             // anotherPageType: "Custom Title",
           };

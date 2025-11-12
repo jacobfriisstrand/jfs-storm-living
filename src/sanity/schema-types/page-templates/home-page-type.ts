@@ -8,7 +8,7 @@ export const apiVersion = process.env.SANITY_API_VERSION || "2025-03-26";
 
 export const studioClient = client.withConfig({ apiVersion });
 
-const homePageModules = ["textAndImage", "homepageHero", "textAndLinkBlock", "listModule", "featureList", "quoteModule", "ctaBlock", "contactModule"];
+const homePageModules = ["textAndImage", "homepageHero", "textAndLinkBlock", "listModule", "featureList", "quoteModule", "ctaBlock", "contactModule", "richTextModule"];
 
 export const homePageType = defineType({
   name: "homePage",

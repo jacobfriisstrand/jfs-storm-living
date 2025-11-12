@@ -1,4 +1,9 @@
-import type { WebPageElement, WithContext } from "schema-dts";
+import type {
+  EntryPoint,
+  ReadAction,
+  WebPageElement,
+  WithContext,
+} from "schema-dts";
 
 import { PortableText } from "next-sanity";
 
@@ -13,11 +18,31 @@ import { getPortableTextComponents } from "@/sanity/rich-text-components";
 import { Grid, GridItem } from "../ui/grid";
 
 function generateContactModuleData(props: ContactModuleProps): WithContext<WebPageElement> {
+  const { _key, title, contactButtonsData, contactButtonText } = props;
+
+  const action: ReadAction | undefined = contactButtonsData?.email && contactButtonText
+    ? {
+        "@type": "ReadAction",
+        "name": contactButtonText,
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `mailto:${contactButtonsData.email}`,
+        } as EntryPoint,
+      }
+    : undefined;
+
   return {
     "@context": "https://schema.org",
     "@type": "WebPageElement",
-    "name": props.title || "Kontakt modul",
-    "description": "Kontakt modul module content",
+    "@id": `#contact-module-${_key ?? "primary"}`,
+    "name": title || "Kontakt modul",
+    "description": title
+      ? `Kontakt modul: ${title}`
+      : "Kontakt modul module content",
+    "isPartOf": { "@id": "#webpage" },
+    "mainEntityOfPage": { "@id": "#webpage" },
+    ...(contactButtonsData?.email ? { email: contactButtonsData.email } : {}),
+    ...(action ? { potentialAction: action } : {}),
   };
 }
 
@@ -37,7 +62,7 @@ export function ContactModule({
   contactButtonsData,
   ...props
 }: ContactModuleProps) {
-  const contactModuleData = generateContactModuleData({ _key, title, description, showContactButton, contactButtonText, ...props });
+  const contactModuleData = generateContactModuleData({ _key, title, description, showContactButton, contactButtonText, contactButtonsData, ...props });
 
   return (
     <Container size="fluid" className="bg-brand py-20 tablet:py-60">
