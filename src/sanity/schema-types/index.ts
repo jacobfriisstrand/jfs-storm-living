@@ -1,6 +1,7 @@
 import type { SchemaTypeDefinition } from "sanity";
 
 import { globalSettingsType } from "@/sanity/schema-types/global-settings-type";
+import { contactModuleType } from "@/sanity/schema-types/modules/contact-module-type";
 import { ctaBlockType } from "@/sanity/schema-types/modules/cta-block-type";
 import { featureListType } from "@/sanity/schema-types/modules/feature-list-type";
 import { footerType } from "@/sanity/schema-types/modules/footer-type";
@@ -15,6 +16,7 @@ import { basePageType } from "@/sanity/schema-types/page-templates/base-page-typ
 import { genericPageType } from "@/sanity/schema-types/page-templates/generic-page-type";
 import { homePageType } from "@/sanity/schema-types/page-templates/home-page-type";
 import { notFoundPageType } from "@/sanity/schema-types/page-templates/not-found-page-type";
+import { emailReferenceType, phoneReferenceType } from "@/sanity/schema-types/utilities/contact-reference-types";
 import { imageFieldType } from "@/sanity/schema-types/utilities/image-field-type";
 import { navigationLinkType } from "@/sanity/schema-types/utilities/navigation-link-type";
 import { redirectType } from "@/sanity/schema-types/utilities/redirect-type";
@@ -28,6 +30,8 @@ export const schema: SchemaTypeDefinition[] = [
   imageFieldType,
   richTextType,
   richTextNoImagesType,
+  emailReferenceType,
+  phoneReferenceType,
 
   // Module types
   textAndImageType,
@@ -50,4 +54,5 @@ export const schema: SchemaTypeDefinition[] = [
   featureListType,
   quoteModuleType,
   ctaBlockType,
+  contactModuleType,
 ];

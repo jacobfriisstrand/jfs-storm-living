@@ -3,8 +3,9 @@
 import { createDataAttribute } from "next-sanity";
 import { useRef } from "react";
 
-import type { PAGE_QUERYResult } from "@/sanity/types";
+import type { CONTACT_BUTTONS_QUERYResult, PAGE_QUERYResult } from "@/sanity/types";
 
+import { ContactModule } from "@/components/modules/contact-module";
 import { CtaBlock } from "@/components/modules/cta-block";
 import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
@@ -20,6 +21,7 @@ type PageBuilderProps = {
   modules: NonNullable<PAGE_QUERYResult>["pageBuilder"];
   documentId: string;
   documentType: string;
+  contactButtonsData?: CONTACT_BUTTONS_QUERYResult;
 };
 
 function DragHandle({
@@ -51,6 +53,7 @@ export function PageBuilder({
   modules,
   documentId,
   documentType,
+  contactButtonsData,
 }: PageBuilderProps) {
   // Ensure content is an array
   const blocks = Array.isArray(modules) ? modules : [];
@@ -116,6 +119,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <CtaBlock {...block} />
+              </DragHandle>
+            );
+          case "contactModule":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <ContactModule {...block} contactButtonsData={contactButtonsData} />
               </DragHandle>
             );
           default:

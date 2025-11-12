@@ -17,6 +17,26 @@ const SEO_QUERY = `
   },
 `;
 
+// Fragment for resolving inline contact references in rich text fields
+const INLINE_CONTACT_REFERENCES = `
+  _type == "block" => {
+    ...,
+    children[]{
+      ...,
+      _type == "emailReference" => {
+        _type,
+        _key,
+        "email": globalSettings->.contactInfo.email
+      },
+      _type == "phoneReference" => {
+        _type,
+        _key,
+        "phone": globalSettings->.contactInfo.phone
+      }
+    }
+  }
+`;
+
 const CONTENT_QUERY = `pageBuilder[]{
   ...,
   _type == "textAndImage" => {
@@ -27,7 +47,10 @@ const CONTENT_QUERY = `pageBuilder[]{
   _type == "homepageHero" => {
     ...,
     title,
-    description,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
+    },
     image ${IMAGE_QUERY},
     buttons[]{
       ...,
@@ -93,6 +116,15 @@ const CONTENT_QUERY = `pageBuilder[]{
         _type,
         "slug": slug.current
       }
+    }
+  }
+,
+  _type == "contactModule" => {
+    ...,
+    contactButtonText,
+    description[]{
+      ...,
+      ${INLINE_CONTACT_REFERENCES}
     }
   }
 }`;
