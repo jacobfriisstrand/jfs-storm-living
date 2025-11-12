@@ -149,6 +149,11 @@ const CONTENT_QUERY = `pageBuilder[]{
     ...,
     image ${IMAGE_QUERY}
   }
+,
+  _type == "imageGrid" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.
