@@ -6,6 +6,7 @@ import { ctaBlockType } from "@/sanity/schema-types/modules/cta-block-type";
 import { featureListType } from "@/sanity/schema-types/modules/feature-list-type";
 import { footerType } from "@/sanity/schema-types/modules/footer-type";
 import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type";
+import { gridModuleType } from "@/sanity/schema-types/modules/grid-module-type";
 import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
 import { listModuleType } from "@/sanity/schema-types/modules/list-module-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
@@ -57,4 +58,5 @@ export const schema: SchemaTypeDefinition[] = [
   ctaBlockType,
   contactModuleType,
   richTextModuleType,
+  gridModuleType,
 ];
