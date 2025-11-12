@@ -144,6 +144,11 @@ const CONTENT_QUERY = `pageBuilder[]{
       ${INLINE_CONTACT_REFERENCES}
     }
   }
+,
+  _type == "gridModule" => {
+    ...,
+    image ${IMAGE_QUERY}
+  }
 }`;
 
 // The $pageTypes is an array of page types that are allowed to be queried.

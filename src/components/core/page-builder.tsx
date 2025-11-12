@@ -9,6 +9,7 @@ import { ContactModule } from "@/components/modules/contact-module";
 import { CtaBlock } from "@/components/modules/cta-block";
 import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
+import { GridModule } from "@/components/modules/grid-module";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { ListModule } from "@/components/modules/list-module";
 import { QuoteModule } from "@/components/modules/quote-module";
@@ -132,6 +133,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <RichTextModule {...block} />
+              </DragHandle>
+            );
+          case "gridModule":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <GridModule {...block} />
               </DragHandle>
             );
           default:
