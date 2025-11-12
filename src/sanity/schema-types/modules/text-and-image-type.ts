@@ -18,7 +18,7 @@ export const textAndImageType = defineType({
     }),
     defineField({
       name: "title",
-      type: "string",
+      type: "text",
     }),
     defineField({
       name: "image",
