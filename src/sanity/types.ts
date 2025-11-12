@@ -834,7 +834,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: PAGE_QUERY
-// Query: *[_type in $pageTypes && slug.current == $slug][0]{  ...,    "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },  pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "homepageHero" => {    ...,    title,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    image {  ...,  alt,  asset-> {    url  }},    buttons[]{      ...,      "label": select(label == null => undefined, label),      linkType,      url,      page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "genericHero" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "textAndLinkBlock" => {    ...,    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "listModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "featureList" => {    ...,    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "quoteModule" => {    ...,  },  _type == "ctaBlock" => {    ...,    image {  ...,  alt,  asset-> {    url  }},    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "contactModule" => {    ...,    contactButtonText,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  },  _type == "richTextModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  }}}
+// Query: *[_type in $pageTypes && slug.current == $slug][0]{  ...,    "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },  pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "homepageHero" => {    ...,    title,    description,    image {  ...,  alt,  asset-> {    url  }},    buttons[]{      ...,      "label": select(label == null => undefined, label),      linkType,      url,      page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "genericHero" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "textAndLinkBlock" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "listModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "featureList" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "quoteModule" => {    ...,  },  _type == "ctaBlock" => {    ...,    image {  ...,  alt,  asset-> {    url  }},    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "contactModule" => {    ...,    contactButtonText,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  },  _type == "richTextModule" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  }}}
 export type PAGE_QUERYResult =
   | {
       _id: string;
@@ -961,21 +961,37 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "ctaBlock";
             title?: string;
-            description?: Array<{
-              children?: Array<
-                | ({
+            description: Array<{
+              children: Array<
+                | {
                     _key: string;
-                  } & EmailReference)
-                | ({
+                    _type: "emailReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    email: string | null;
+                  }
+                | {
                     _key: string;
-                  } & PhoneReference)
+                    _type: "phoneReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    phone: string | null;
+                  }
                 | {
                     marks?: Array<string>;
                     text?: string;
                     _type: "span";
                     _key: string;
                   }
-              >;
+              > | null;
               style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
               listItem?: "bullet";
               markDefs?: Array<{
@@ -986,7 +1002,7 @@ export type PAGE_QUERYResult =
               level?: number;
               _type: "block";
               _key: string;
-            }>;
+            }> | null;
             image: {
               asset: {
                 url: string | null;
@@ -1027,22 +1043,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "featureList";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1068,7 +1100,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -1145,22 +1177,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "richTextModule";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1186,8 +1234,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
-            image: null;
+            > | null;
           }
         | {
             _key: string;
@@ -1209,22 +1256,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "textAndLinkBlock";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1250,7 +1313,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -1412,21 +1475,37 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "ctaBlock";
             title?: string;
-            description?: Array<{
-              children?: Array<
-                | ({
+            description: Array<{
+              children: Array<
+                | {
                     _key: string;
-                  } & EmailReference)
-                | ({
+                    _type: "emailReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    email: string | null;
+                  }
+                | {
                     _key: string;
-                  } & PhoneReference)
+                    _type: "phoneReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    phone: string | null;
+                  }
                 | {
                     marks?: Array<string>;
                     text?: string;
                     _type: "span";
                     _key: string;
                   }
-              >;
+              > | null;
               style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
               listItem?: "bullet";
               markDefs?: Array<{
@@ -1437,7 +1516,7 @@ export type PAGE_QUERYResult =
               level?: number;
               _type: "block";
               _key: string;
-            }>;
+            }> | null;
             image: {
               asset: {
                 url: string | null;
@@ -1478,22 +1557,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "featureList";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1519,7 +1614,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -1554,7 +1649,7 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "homepageHero";
             title: string | null;
-            description: null;
+            description: string | null;
             image: {
               asset: {
                 url: string | null;
@@ -1621,22 +1716,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "richTextModule";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1662,8 +1773,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
-            image: null;
+            > | null;
           }
         | {
             _key: string;
@@ -1685,22 +1795,38 @@ export type PAGE_QUERYResult =
             _key: string;
             _type: "textAndLinkBlock";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -1726,7 +1852,7 @@ export type PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -2336,7 +2462,7 @@ export type FOOTER_INFO_QUERYResult = {
   };
 } | null;
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "homePage"][0]{    ...,      "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },    pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "homepageHero" => {    ...,    title,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    image {  ...,  alt,  asset-> {    url  }},    buttons[]{      ...,      "label": select(label == null => undefined, label),      linkType,      url,      page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "genericHero" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "textAndLinkBlock" => {    ...,    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "listModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "featureList" => {    ...,    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "quoteModule" => {    ...,  },  _type == "ctaBlock" => {    ...,    image {  ...,  alt,  asset-> {    url  }},    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "contactModule" => {    ...,    contactButtonText,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  },  _type == "richTextModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  }}  }
+// Query: *[_id == "homePage"][0]{    ...,      "seo": {    "title": seo.title,    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },    pageBuilder[]{  ...,  _type == "textAndImage" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "homepageHero" => {    ...,    title,    description,    image {  ...,  alt,  asset-> {    url  }},    buttons[]{      ...,      "label": select(label == null => undefined, label),      linkType,      url,      page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "genericHero" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "textAndLinkBlock" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "listModule" => {    ...,    image {  ...,  alt,  asset-> {    url  }}  },  _type == "featureList" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "quoteModule" => {    ...,  },  _type == "ctaBlock" => {    ...,    image {  ...,  alt,  asset-> {    url  }},    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    },    link {      ...,      "url": select(url == null => undefined, url),      "page": page->{        _id,        _type,        "slug": slug.current      }    }  },  _type == "contactModule" => {    ...,    contactButtonText,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  },  _type == "richTextModule" => {    ...,    description[]{      ...,        _type == "block" => {    ...,    children[]{      ...,      _type == "emailReference" => {        _type,        _key,        "email": globalSettings->.contactInfo.email      },      _type == "phoneReference" => {        _type,        _key,        "phone": globalSettings->.contactInfo.phone      }    }  }    }  }}  }
 export type HOME_PAGE_QUERYResult =
   | {
       _id: string;
@@ -2463,21 +2589,37 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "ctaBlock";
             title?: string;
-            description?: Array<{
-              children?: Array<
-                | ({
+            description: Array<{
+              children: Array<
+                | {
                     _key: string;
-                  } & EmailReference)
-                | ({
+                    _type: "emailReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    email: string | null;
+                  }
+                | {
                     _key: string;
-                  } & PhoneReference)
+                    _type: "phoneReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    phone: string | null;
+                  }
                 | {
                     marks?: Array<string>;
                     text?: string;
                     _type: "span";
                     _key: string;
                   }
-              >;
+              > | null;
               style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
               listItem?: "bullet";
               markDefs?: Array<{
@@ -2488,7 +2630,7 @@ export type HOME_PAGE_QUERYResult =
               level?: number;
               _type: "block";
               _key: string;
-            }>;
+            }> | null;
             image: {
               asset: {
                 url: string | null;
@@ -2529,22 +2671,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "featureList";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -2570,7 +2728,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -2647,22 +2805,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "richTextModule";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -2688,8 +2862,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
-            image: null;
+            > | null;
           }
         | {
             _key: string;
@@ -2711,22 +2884,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "textAndLinkBlock";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -2752,7 +2941,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -2914,21 +3103,37 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "ctaBlock";
             title?: string;
-            description?: Array<{
-              children?: Array<
-                | ({
+            description: Array<{
+              children: Array<
+                | {
                     _key: string;
-                  } & EmailReference)
-                | ({
+                    _type: "emailReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    email: string | null;
+                  }
+                | {
                     _key: string;
-                  } & PhoneReference)
+                    _type: "phoneReference";
+                    globalSettings?: {
+                      _ref: string;
+                      _type: "reference";
+                      _weak?: boolean;
+                      [internalGroqTypeReferenceTo]?: "globalSettings";
+                    };
+                    phone: string | null;
+                  }
                 | {
                     marks?: Array<string>;
                     text?: string;
                     _type: "span";
                     _key: string;
                   }
-              >;
+              > | null;
               style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
               listItem?: "bullet";
               markDefs?: Array<{
@@ -2939,7 +3144,7 @@ export type HOME_PAGE_QUERYResult =
               level?: number;
               _type: "block";
               _key: string;
-            }>;
+            }> | null;
             image: {
               asset: {
                 url: string | null;
@@ -2980,22 +3185,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "featureList";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -3021,7 +3242,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -3056,7 +3277,7 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "homepageHero";
             title: string | null;
-            description: null;
+            description: string | null;
             image: {
               asset: {
                 url: string | null;
@@ -3123,22 +3344,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "richTextModule";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -3164,8 +3401,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
-            image: null;
+            > | null;
           }
         | {
             _key: string;
@@ -3187,22 +3423,38 @@ export type HOME_PAGE_QUERYResult =
             _key: string;
             _type: "textAndLinkBlock";
             title?: string;
-            description?: Array<
+            description: Array<
               | {
-                  children?: Array<
-                    | ({
+                  children: Array<
+                    | {
                         _key: string;
-                      } & EmailReference)
-                    | ({
+                        _type: "emailReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        email: string | null;
+                      }
+                    | {
                         _key: string;
-                      } & PhoneReference)
+                        _type: "phoneReference";
+                        globalSettings?: {
+                          _ref: string;
+                          _type: "reference";
+                          _weak?: boolean;
+                          [internalGroqTypeReferenceTo]?: "globalSettings";
+                        };
+                        phone: string | null;
+                      }
                     | {
                         marks?: Array<string>;
                         text?: string;
                         _type: "span";
                         _key: string;
                       }
-                  >;
+                  > | null;
                   style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
                   listItem?: "bullet";
                   markDefs?: Array<{
@@ -3228,7 +3480,7 @@ export type HOME_PAGE_QUERYResult =
                   _type: "imageFieldType";
                   _key: string;
                 }
-            >;
+            > | null;
             link: {
               _type: "navigationLink";
               label?: string;
@@ -3428,14 +3680,14 @@ export type SITEMAP_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type in $pageTypes && slug.current == $slug][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "textAndLinkBlock" => {\n    ...,\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "listModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "featureList" => {\n    ...,\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "quoteModule" => {\n    ...,\n  }\n,\n  _type == "ctaBlock" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "contactModule" => {\n    ...,\n    contactButtonText,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n,\n  _type == "richTextModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n}': PAGE_QUERYResult;
+    '*[_type in $pageTypes && slug.current == $slug][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "textAndLinkBlock" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "listModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "featureList" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "quoteModule" => {\n    ...,\n  }\n,\n  _type == "ctaBlock" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "contactModule" => {\n    ...,\n    contactButtonText,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n,\n  _type == "richTextModule" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n}\n}': PAGE_QUERYResult;
     '*[_id == "notFoundPage"][0]{\n  ...,\n  \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n  heading,\n  subheading,\n}': NOT_FOUND_PAGE_QUERYResult;
     '*[_type == "globalSettings"][0]{\n  "logo": logo {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n}': LOGO_QUERYResult;
     '*[_type == "globalSettings"][0]{\n  "email": contactInfo.email,\n  "copyEmailTooltipText": copyEmailTooltipText\n}': CONTACT_BUTTONS_QUERYResult;
     '*[_type == "navigation"][0]{\n  ...,\n  logoText,\n  contactButtonText,\n  menu[]{\n    _type,\n    "label": select(label == null => undefined, label),\n    "linkType": select(linkType == null => undefined, linkType),\n    "url": select(url == null => undefined, url),\n    "page": page->{\n      _id,\n      _type,\n      "slug": slug.current\n    }\n  },\n}': NAVIGATION_QUERYResult;
     '*[_type == "footer"][0]{\n  ...,\n  menu[]{\n    _type,\n    "label": select(label == null => undefined, label),\n    "linkType": select(linkType == null => undefined, linkType),\n    "url": select(url == null => undefined, url),\n    "page": page->{\n      _id,\n      _type,\n      "slug": slug.current\n    }\n  },\n  footerDisplayText\n}': FOOTER_QUERYResult;
     '*[_type == "globalSettings"][0]{\n  "phone": contactInfo.phone,\n  "email": contactInfo.email,\n  "address": {\n    "streetName": address.streetName,\n    "streetNumber": address.streetNumber,\n    "floor": address.floor,\n    "zipCode": address.zipCode,\n    "city": address.city\n  },\n  "copyright": copyright,\n  "vatNumber": {\n    "vatNumberHeading": vatNumberObject.vatNumberHeading,\n    "vatNumber": vatNumberObject.vatNumber\n  }\n}': FOOTER_INFO_QUERYResult;
-    '*[_id == "homePage"][0]{\n    ...,\n    \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n    pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "textAndLinkBlock" => {\n    ...,\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "listModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "featureList" => {\n    ...,\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "quoteModule" => {\n    ...,\n  }\n,\n  _type == "ctaBlock" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "contactModule" => {\n    ...,\n    contactButtonText,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n,\n  _type == "richTextModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n}\n  }': HOME_PAGE_QUERYResult;
+    '*[_id == "homePage"][0]{\n    ...,\n    \n  "seo": {\n    "title": seo.title,\n    "description": coalesce(seo.description,  ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  },\n\n    pageBuilder[]{\n  ...,\n  _type == "textAndImage" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "homepageHero" => {\n    ...,\n    title,\n    description,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    buttons[]{\n      ...,\n      "label": select(label == null => undefined, label),\n      linkType,\n      url,\n      page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "genericHero" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "textAndLinkBlock" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "listModule" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n}\n  }\n,\n  _type == "featureList" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "quoteModule" => {\n    ...,\n  }\n,\n  _type == "ctaBlock" => {\n    ...,\n    image {\n  ...,\n  alt,\n  asset-> {\n    url\n  }\n},\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    },\n    link {\n      ...,\n      "url": select(url == null => undefined, url),\n      "page": page->{\n        _id,\n        _type,\n        "slug": slug.current\n      }\n    }\n  }\n,\n  _type == "contactModule" => {\n    ...,\n    contactButtonText,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n,\n  _type == "richTextModule" => {\n    ...,\n    description[]{\n      ...,\n      \n  _type == "block" => {\n    ...,\n    children[]{\n      ...,\n      _type == "emailReference" => {\n        _type,\n        _key,\n        "email": globalSettings->.contactInfo.email\n      },\n      _type == "phoneReference" => {\n        _type,\n        _key,\n        "phone": globalSettings->.contactInfo.phone\n      }\n    }\n  }\n\n    }\n  }\n}\n  }': HOME_PAGE_QUERYResult;
     '\n  *[_type == "redirect" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n': REDIRECTS_QUERYResult;
     '\n  *[_id == $id][0]{\n    title,\n    "image": seo.image {\n      ...,\n      asset-> {\n        _id,\n        _type,\n        url,\n        metadata {\n          palette\n        }\n      }\n    }\n  }    \n': OG_IMAGE_QUERYResult;
     '\n*[_type in $pageTypes && defined(slug.current)] {\n    "href": select(\n      _type == $pageTypes[0] => "/" + slug.current,\n      slug.current\n    ),\n    _updatedAt\n}\n': SITEMAP_QUERYResult;
