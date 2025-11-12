@@ -13,6 +13,7 @@ import { GridModule } from "@/components/modules/grid-module";
 import { HomepageHero } from "@/components/modules/homepage-hero";
 import { ImageGrid } from "@/components/modules/image-grid";
 import { ListModule } from "@/components/modules/list-module";
+import { PriceListModule } from "@/components/modules/price-list-module";
 import { QuoteModule } from "@/components/modules/quote-module";
 import { RichTextModule } from "@/components/modules/rich-text-module";
 import { TextAndImage } from "@/components/modules/text-and-image";
@@ -146,6 +147,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <ImageGrid {...block} />
+              </DragHandle>
+            );
+          case "priceListModule":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <PriceListModule {...block} />
               </DragHandle>
             );
           default:

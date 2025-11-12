@@ -11,6 +11,7 @@ import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-ty
 import { imageGridType } from "@/sanity/schema-types/modules/image-grid-type";
 import { listModuleType } from "@/sanity/schema-types/modules/list-module-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
+import { priceListModuleType } from "@/sanity/schema-types/modules/price-list-module-type";
 import { quoteModuleType } from "@/sanity/schema-types/modules/quote-module-type";
 import { richTextModuleType } from "@/sanity/schema-types/modules/rich-text-module-type";
 import { textAndImageType } from "@/sanity/schema-types/modules/text-and-image-type";
@@ -61,4 +62,5 @@ export const schema: SchemaTypeDefinition[] = [
   richTextModuleType,
   gridModuleType,
   imageGridType,
+  priceListModuleType,
 ];

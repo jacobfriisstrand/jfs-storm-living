@@ -125,7 +125,7 @@ export default function Navigation({ navigationData, logoData, contactButtonsDat
                           );
                         })}
                         {navigationData?.contactButtonText && (
-                          <li className="max-tablet:w-full max-tablet:flex flex-1">
+                          <li className="max-tablet:w-full max-tablet:flex flex-1 [&>div]:max-tablet:w-full">
                             {/* TODO: Add mail link from settings */}
                             {contactButtonsData?.email && contactButtonsData.copyEmailTooltipText && (
                               <ContactButtons className="max-tablet:w-full" isHamburgerMenuOpen={isHamburgerMenuOpen} copyEmailTooltipText={contactButtonsData.copyEmailTooltipText} contactEmail={contactButtonsData.email} contactButtonText={navigationData?.contactButtonText} />
