@@ -8,6 +8,7 @@ import { footerType } from "@/sanity/schema-types/modules/footer-type";
 import { genericHeroType } from "@/sanity/schema-types/modules/generic-hero-type";
 import { gridModuleType } from "@/sanity/schema-types/modules/grid-module-type";
 import { homepageHeroType } from "@/sanity/schema-types/modules/homepage-hero-type";
+import { imageGridType } from "@/sanity/schema-types/modules/image-grid-type";
 import { listModuleType } from "@/sanity/schema-types/modules/list-module-type";
 import { navigationType } from "@/sanity/schema-types/modules/navigation-type";
 import { quoteModuleType } from "@/sanity/schema-types/modules/quote-module-type";
@@ -59,4 +60,5 @@ export const schema: SchemaTypeDefinition[] = [
   contactModuleType,
   richTextModuleType,
   gridModuleType,
+  imageGridType,
 ];

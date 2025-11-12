@@ -11,6 +11,7 @@ import { FeatureList } from "@/components/modules/feature-list";
 import { GenericHero } from "@/components/modules/generic-hero";
 import { GridModule } from "@/components/modules/grid-module";
 import { HomepageHero } from "@/components/modules/homepage-hero";
+import { ImageGrid } from "@/components/modules/image-grid";
 import { ListModule } from "@/components/modules/list-module";
 import { QuoteModule } from "@/components/modules/quote-module";
 import { RichTextModule } from "@/components/modules/rich-text-module";
@@ -139,6 +140,12 @@ export function PageBuilder({
             return (
               <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
                 <GridModule {...block} />
+              </DragHandle>
+            );
+          case "imageGrid":
+            return (
+              <DragHandle key={block._key} blockKey={block._key} documentId={documentId} documentType={documentType}>
+                <ImageGrid {...block} />
               </DragHandle>
             );
           default:
