@@ -19,7 +19,7 @@ export const genericPageType = defineType({
   fields: [
     ...basePageType.fields,
     defineField({
-      ...basePageBuilder(genericPageModules),
+      ...basePageBuilder(genericPageModules, "genericHero"),
     }),
   ],
   preview: basePageType.preview,

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 
+import { Container } from "@/components/ui/container";
+import { Grid, GridItem } from "@/components/ui/grid";
+import { Heading, Paragraph } from "@/components/ui/typography";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { NOT_FOUND_PAGE_QUERY } from "@/sanity/lib/queries";
@@ -43,9 +46,17 @@ export default async function NotFound() {
   const { data: page } = await getPage();
 
   return (
-    <main>
-      <h1 className="text-4xl font-bold text-center">{page?.heading}</h1>
-      <p className="mt-4 text-lg">{page?.subheading}</p>
+    <main className="mt-(--navigation-height-mobile) tablet:mt-(--navigation-height-desktop) flex items-center justify-center h-[calc(100svh-var(--navigation-height-mobile))] tablet:h-[calc(100svh-var(--navigation-height-desktop))]">
+      <Container>
+        <Grid className="gap-y-20">
+          <GridItem>
+            <Heading size="h1" as="h1" colorScheme="dark">{page?.heading}</Heading>
+          </GridItem>
+          <GridItem>
+            <Paragraph size="default" colorScheme="dark">{page?.subheading}</Paragraph>
+          </GridItem>
+        </Grid>
+      </Container>
     </main>
   );
 }

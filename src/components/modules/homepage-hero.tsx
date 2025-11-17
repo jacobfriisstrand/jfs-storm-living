@@ -79,7 +79,7 @@ export function HomepageHero({
   const transformedButtons = transformNavigationLinks(buttons as InputLink[]);
 
   return (
-    <section className="grid place-items-end">
+    <section className="grid place-items-end mt-(--navigation-height-mobile) tablet:mt-(--navigation-height-desktop)">
       <JSONLD data={homepageHeroData} />
 
       <Container size="fluid" className="[grid-area:1/1] -z-1 relative">

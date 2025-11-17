@@ -43,7 +43,7 @@ export function GenericHero({
   const genericHeroData = generateGenericHeroData({ _key, title, image, ...props });
 
   return (
-    <section className="space-y-20 tablet:space-y-40">
+    <section className="space-y-20 tablet:space-y-40 mt-(--navigation-height-mobile) tablet:mt-(--navigation-height-desktop)">
       <JSONLD data={genericHeroData} />
       <Container size="fluid" className="relative">
         {image?.asset?.url && image.alt && (

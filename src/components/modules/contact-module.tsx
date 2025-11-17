@@ -73,7 +73,7 @@ export function ContactModule({
             <GridItem className="tablet:col-span-7">
               {title && <Heading size="h1" as="h2" colorScheme="light" className="text-balance">{title}</Heading>}
             </GridItem>
-            <GridItem className="tablet:col-start-9 tablet:aspect-video tablet:flex tablet:flex-col tablet:justify-between">
+            <GridItem className="tablet:col-start-9 tablet:aspect-video tablet:flex tablet:flex-col tablet:justify-between space-y-20 tablet:space-y-0">
               {description && <PortableText value={description} components={getPortableTextComponents({ allowImages: false, colorScheme: "light" })} />}
               {showContactButton && contactButtonsData?.email && contactButtonText && contactButtonsData?.copyEmailTooltipText && (
                 <ContactButtons

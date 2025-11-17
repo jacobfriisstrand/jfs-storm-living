@@ -18,7 +18,7 @@ export const homePageType = defineType({
   fields: [
     ...basePageType.fields,
     defineField({
-      ...basePageBuilder(homePageModules),
+      ...basePageBuilder(homePageModules, "homepageHero"),
     }),
   ],
   preview: basePageType.preview,

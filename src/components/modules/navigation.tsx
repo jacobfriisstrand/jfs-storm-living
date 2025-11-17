@@ -24,10 +24,12 @@ import { getNavigationHref, transformNavigationLinks } from "@/lib/utils/transfo
 export default function Navigation({ navigationData, logoData, contactButtonsData }: { navigationData: NAVIGATION_QUERYResult; logoData: LOGO_QUERYResult; contactButtonsData: CONTACT_BUTTONS_QUERYResult }) {
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHamburgerMenu();
   const [isVisible, setIsVisible] = useState(true);
+  const [hiddenAtPosition, setHiddenAtPosition] = useState<number | null>(null);
   const { scrollY } = useScroll();
   const pathname = usePathname();
   const hideThreshold = 200; // Hide when scrolling down past this point
   const showThreshold = 20; // Show when scrolling up past this point
+  const scrollUpOffset = 200; // Require scrolling up this much before showing
 
   // Get the breakpoint value from CSS variable
   const tabletBreakpoint = useMemo(() => {
@@ -66,15 +68,25 @@ export default function Navigation({ navigationData, logoData, contactButtonsDat
     // Always show when near top of page
     if (latest <= showThreshold) {
       setIsVisible(true);
+      setHiddenAtPosition(null);
       return;
     }
 
     // Hide when scrolling down past hide threshold
     if (isScrollingDown && latest > hideThreshold) {
       setIsVisible(false);
+      setHiddenAtPosition(latest);
     }
-    // Show immediately when scrolling up (no threshold needed)
-    else if (isScrollingUp) {
+    // Show when scrolling up, but only after scrolling up by the required offset
+    else if (isScrollingUp && hiddenAtPosition !== null) {
+      const scrollUpDistance = hiddenAtPosition - latest;
+      if (scrollUpDistance >= scrollUpOffset) {
+        setIsVisible(true);
+        setHiddenAtPosition(null);
+      }
+    }
+    // Show immediately when scrolling up if not hidden
+    else if (isScrollingUp && hiddenAtPosition === null) {
       setIsVisible(true);
     }
   });
@@ -100,7 +112,7 @@ export default function Navigation({ navigationData, logoData, contactButtonsDat
       style={{ willChange: "transform" }}
       className="fixed top-0 left-0 right-0 z-50"
     >
-      <Container size="fluid" className="bg-dark text-light max-tablet:h-(--navigation-height-mobile) desktop:h-(--navigation-height-desktop)">
+      <Container size="fluid" className="bg-dark text-light max-tablet:h-(--navigation-height-mobile) tablet:h-(--navigation-height-desktop)">
         <Container className="max-tablet:contents">
           <Grid className="max-tablet:contents">
             <GridItem className="max-tablet:contents tablet:col-span-full">
@@ -119,7 +131,7 @@ export default function Navigation({ navigationData, logoData, contactButtonsDat
                         {transformedLinks.map((item) => {
                           const href = getNavigationHref(item);
                           return (
-                            <li key={item.page?._ref ?? item.url}>
+                            <li className="tablet:text-center" key={item.page?._ref ?? item.url}>
                               <Link href={href} onClick={handleLinkClick} tabIndex={isHamburgerMenuOpen ? undefined : -1}>{item.label}</Link>
                             </li>
                           );
