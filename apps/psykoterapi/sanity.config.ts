@@ -10,7 +10,7 @@ import { defineConfig, isDev } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 
-// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
+// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works.
 import { apiVersion, projectId, siteName } from "./src/sanity/env";
 import { schema } from "./src/sanity/schema-types";
 import { structure } from "./src/sanity/structure";
