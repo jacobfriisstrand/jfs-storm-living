@@ -13,7 +13,14 @@ export default antfu(
       semi: true,
       quotes: "double",
     },
-    ignores: ["src/sanity/types.ts"],
+    ignores: [
+      "apps/*/src/sanity/types.ts",
+      "dist/**",
+      ".next/**",
+      "**/*.md",
+      "**/.gitignore",
+      "**/package-lock.json",
+    ],
     plugins: {
       "@next/next": nextPlugin,
     },
@@ -29,6 +36,7 @@ export default antfu(
         "error",
         {
           tsconfigRootDir: ".",
+          type: "natural",
         },
       ],
       "unicorn/filename-case": [

@@ -1,0 +1,66 @@
+"use client";
+
+/**
+ * This configuration is used to for the Sanity Studio that's mounted on the `/app/admin/[[...tool]]/page.tsx` route
+ */
+
+import { resolve } from "@/sanity/presentation/resolve";
+import { visionTool } from "@sanity/vision";
+import { defineConfig, isDev } from "sanity";
+import { presentationTool } from "sanity/presentation";
+import { structureTool } from "sanity/structure";
+
+// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
+import { apiVersion, projectId, siteName } from "./src/sanity/env";
+import { schema } from "./src/sanity/schema-types";
+import { structure } from "./src/sanity/structure";
+
+// Shared configuration for newDocumentOptions
+const filteredDocumentTypes = [
+  "globalSettings", // Singleton
+  "homePage", // Singleton
+  "navigation", // Singleton
+  "notFoundPage", // Singleton
+  "basePage", // Base type, not meant to be created directly
+  "seo", // Utility type
+  "imageField", // Utility type
+  "richText", // Utility type
+  "redirect", // Utility type
+  "navigationLink", // Utility type
+];
+
+function getTitle() {
+  if (isDev)
+    return "Development";
+  const siteNameMap: Record<string, string> = {
+    "qi-gong": "Storm Living Qi Gong",
+    "psykoterapi": "Psykoterapi",
+  };
+  return siteNameMap[siteName] || siteName;
+}
+
+export default defineConfig({
+  name: "default",
+  title: getTitle(),
+  basePath: "/admin",
+  projectId,
+  dataset: isDev ? "development" : "production",
+  plugins: [
+    structureTool({ structure }),
+    ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
+    presentationTool({
+      resolve,
+      previewUrl: {
+        previewMode: {
+          enable: "/api/draft-mode/enable",
+        },
+      },
+    }),
+  ],
+  schema: {
+    types: schema,
+  },
+  document: {
+    newDocumentOptions: prev => prev.filter(item => !filteredDocumentTypes.includes(item.templateId)),
+  },
+});

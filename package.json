@@ -1,20 +1,26 @@
 {
-  "name": "jfs-nextjs-boilerplate",
+  "name": "jfs-storm-living-monorepo",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev:qi-gong": "npm run dev --workspace=apps/qi-gong",
+    "dev:psykoterapi": "npm run dev --workspace=apps/psykoterapi",
+    "build:qi-gong": "npm run build --workspace=apps/qi-gong",
+    "build:psykoterapi": "npm run build --workspace=apps/psykoterapi",
+    "start:qi-gong": "npm run start --workspace=apps/qi-gong",
+    "start:psykoterapi": "npm run start --workspace=apps/psykoterapi",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepare": "husky",
-    "predev": "npm run typegen",
-    "prebuild": "npm run typegen",
-    "typegen": "sanity schema extract --workspace=development --path=./src/sanity/extract.json && sanity typegen generate",
-    "create:pagetype": "npx tsx scripts/create-page-type.ts",
-    "create:module": "npx tsx scripts/create-module.ts",
-    "setup:project": "npx tsx scripts/setup-project.ts"
+    "prepare": "husky || true",
+    "typegen:qi-gong": "npm run typegen --workspace=apps/qi-gong",
+    "typegen:psykoterapi": "npm run typegen --workspace=apps/psykoterapi",
+    "create:pagetype:qi-gong": "npm run create:pagetype --workspace=apps/qi-gong",
+    "create:pagetype:psykoterapi": "npm run create:pagetype --workspace=apps/psykoterapi",
+    "create:module:qi-gong": "npm run create:module --workspace=apps/qi-gong",
+    "create:module:psykoterapi": "npm run create:module --workspace=apps/psykoterapi"
   },
   "dependencies": {
     "@antfu/eslint-config": "^4.11.0",

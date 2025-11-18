@@ -1,0 +1,18 @@
+{
+  "name": "qi-gong",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "predev": "npm run typegen",
+    "prebuild": "npm run typegen",
+    "typegen": "sanity schema extract --workspace=development --path=./src/sanity/extract.json && sanity typegen generate",
+    "create:pagetype": "npx tsx scripts/create-page-type.ts",
+    "create:module": "npx tsx scripts/create-module.ts",
+    "setup:project": "npx tsx scripts/setup-project.ts"
+  }
+}
