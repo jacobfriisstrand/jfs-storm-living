@@ -126,14 +126,16 @@ export default function Navigation({ navigationData, logoData, contactButtonsDat
                     <HamburgerMenuButton onClick={() => setIsHamburgerMenuOpen(!isHamburgerMenuOpen)} className="px-16 tablet:hidden" isHamburgerMenuOpen={isHamburgerMenuOpen} />
                     <div className={cn("z-10 max-tablet:absolute max-tablet:bottom-0 tablet:transition-none max-tablet:translate-y-[calc(100svh-var(--navigation-height-mobile))] max-tablet:bg-dark max-tablet:h-[calc(100svh-var(--navigation-height-mobile))] max-tablet:w-full max-tablet:grid max-tablet:place-items-end max-tablet:pb-32 transition-transform duration-640 ease-navigation", isHamburgerMenuOpen ? "max-tablet:translate-x-0" : "max-tablet:translate-x-full")}>
                       <ul id="navigation-menu" className="w-full flex flex-col tablet:flex-row tablet:items-center justify-center max-tablet:gap-40 gap-20 desktop:gap-40 max-tablet:text-right max-tablet:px-16">
-                        {transformedLinks.map((item) => {
-                          const href = getNavigationHref(item);
-                          return (
-                            <li className="tablet:text-center" key={item.page?._ref ?? item.url}>
-                              <Link href={href} onClick={handleLinkClick} tabIndex={isHamburgerMenuOpen ? undefined : -1}>{item.label}</Link>
-                            </li>
-                          );
-                        })}
+                        {transformedLinks
+                          .filter(item => item.label)
+                          .map((item) => {
+                            const href = getNavigationHref(item);
+                            return (
+                              <li className="tablet:text-center" key={item.page?._ref ?? item.url}>
+                                <Link href={href} onClick={handleLinkClick} tabIndex={isHamburgerMenuOpen ? undefined : -1}>{item.label}</Link>
+                              </li>
+                            );
+                          })}
                         {navigationData?.contactButtonText && (
                           <li className="max-tablet:w-full max-tablet:flex flex-1 [&>div]:max-tablet:w-full">
                             {/* TODO: Add mail link from settings */}

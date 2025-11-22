@@ -13,6 +13,14 @@ export function getPortableTextComponents(options?: { allowImages?: boolean; col
       h3: ({ children }) => <Heading size="h4" as="h3" colorScheme={colorScheme}>{children}</Heading>,
       h4: ({ children }) => <Heading size="h4" as="h4" colorScheme={colorScheme}>{children}</Heading>,
     },
+    list: {
+      bullet: ({ children }) => (
+        <ul className="my-16 list-inside list-disc space-y-8">{children}</ul>
+      ),
+    },
+    listItem: {
+      bullet: ({ children }) => <li className="ml-16">{children}</li>,
+    },
     marks: {
       // Inline blocks are rendered as marks in Portable Text
     },

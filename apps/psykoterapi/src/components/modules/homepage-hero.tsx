@@ -111,14 +111,16 @@ export function HomepageHero({
               <Paragraph colorScheme="light">{description}</Paragraph>
             )}
             <div className="flex flex-row gap-16 tablet:gap-20">
-              {transformedButtons && transformedButtons.map((btn, index) => {
-                const href = getNavigationHref(btn);
-                return (
-                  <Button className="w-fit focus-visible:outline-light" key={`${href}-${btn.label}`} href={href} variant={index > 0 ? "secondary" : "primary"}>
-                    {btn.label}
-                  </Button>
-                );
-              })}
+              {transformedButtons && transformedButtons
+                .filter(btn => btn.label)
+                .map((btn, index) => {
+                  const href = getNavigationHref(btn);
+                  return (
+                    <Button className="w-fit focus-visible:outline-light" key={`${href}-${btn.label}`} href={href} variant={index > 0 ? "secondary" : "primary"}>
+                      {btn.label}
+                    </Button>
+                  );
+                })}
             </div>
           </GridItem>
         </Grid>

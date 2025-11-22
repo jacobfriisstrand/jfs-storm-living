@@ -31,8 +31,12 @@ export function getNavigationHref(link: ExtendedNavigationLink): string {
 export type InputLink = NavigationLink | SanityNavigationLink;
 
 export function transformNavigationLinks(links: InputLink[] | null | undefined): ExtendedNavigationLink[] {
-  return (
-    links?.map((link) => {
+  if (!links)
+    return [];
+
+  return links
+    .filter((link): link is NonNullable<typeof link> => link != null)
+    .map((link) => {
       const base = {
         label: (link as any).label ?? undefined,
         linkType: (link as any).linkType ?? undefined,
@@ -75,6 +79,5 @@ export function transformNavigationLinks(links: InputLink[] | null | undefined):
         ...base,
         page: undefined,
       } as ExtendedNavigationLink;
-    }) ?? []
-  );
+    });
 }

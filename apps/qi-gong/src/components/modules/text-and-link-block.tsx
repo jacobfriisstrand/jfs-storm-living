@@ -63,8 +63,9 @@ export function TextAndLinkBlock({
 }: TextAndLinkBlockProps) {
   const textAndLinkBlockData = generateTextAndLinkBlockData({ _key, title, description, link, ...props });
 
-  const transformedLink = transformNavigationLinks([link as InputLink]);
-  const href = getNavigationHref(transformedLink[0]);
+  const transformedLink = transformNavigationLinks(link ? [link as InputLink] : []);
+  const firstLink = transformedLink[0];
+  const href = firstLink ? getNavigationHref(firstLink) : "#";
 
   return (
     <Container asChild>
@@ -78,13 +79,15 @@ export function TextAndLinkBlock({
           <GridItem className="tablet:col-span-5 tablet:col-start-8 grid">
             {description && <PortableText value={description} components={components} />}
           </GridItem>
-          <GridItem className="tablet:col-span-5 tablet:col-start-8">
-            <NextLink className={cn(headingVariants({ size: "h3", colorScheme: "dark" }), "font-sans flex items-center gap-8 w-fit focus-visible:focus-outline group")} href={href}>
-              {transformedLink[0].label}
-              {" "}
-              <ArrowRightIcon strokeWidth={1.5} className="size-[1em] text-dark group-hover:translate-x-8 transition-transform duration-normal ease-in-out" />
-            </NextLink>
-          </GridItem>
+          {firstLink?.label && (
+            <GridItem className="tablet:col-span-5 tablet:col-start-8">
+              <NextLink className={cn(headingVariants({ size: "h3", colorScheme: "dark" }), "font-sans flex items-center gap-8 w-fit focus-visible:focus-outline group")} href={href}>
+                {firstLink.label}
+                {" "}
+                <ArrowRightIcon strokeWidth={1.5} className="size-[1em] text-dark group-hover:translate-x-8 transition-transform duration-normal ease-in-out" />
+              </NextLink>
+            </GridItem>
+          )}
         </Grid>
       </section>
     </Container>
