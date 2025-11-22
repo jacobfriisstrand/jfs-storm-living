@@ -28,16 +28,18 @@ export default function Footer({ footerData, footerInfoData }: { footerData: FOO
           </GridItem>
           <GridItem className="tablet:col-span-6">
             <ul className="space-y-24">
-              {transformedLinks.map((link) => {
-                const href = getNavigationHref(link);
-                return (
-                  <li key={link.page?._ref ?? link.url}>
-                    <Link key={link.page?._ref ?? link.url} href={href}>
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
+              {transformedLinks
+                .filter(link => link.label)
+                .map((link) => {
+                  const href = getNavigationHref(link);
+                  return (
+                    <li key={link.page?._ref ?? link.url}>
+                      <Link key={link.page?._ref ?? link.url} href={href}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
             </ul>
           </GridItem>
           <GridItem className="col-span-1 row-start-3 tablet:hidden">

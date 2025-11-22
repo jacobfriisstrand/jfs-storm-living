@@ -70,8 +70,9 @@ export function FeatureList({
 }: FeatureListProps) {
   const featureListData = generateFeatureListData({ _key, title, description, link, buttonType, items, ...props });
 
-  const transformedLink = transformNavigationLinks([link as InputLink]);
-  const href = getNavigationHref(transformedLink[0]);
+  const transformedLink = transformNavigationLinks(link ? [link as InputLink] : []);
+  const firstLink = transformedLink[0];
+  const href = firstLink ? getNavigationHref(firstLink) : undefined;
 
   return (
     <>
@@ -93,9 +94,11 @@ export function FeatureList({
                 ))}
               </ul>
             </GridItem>
-            <GridItem className="tablet:col-span-4 tablet:row-start-3 w-fit">
-              <Button href={href} variant={buttonType}>{transformedLink[0].label}</Button>
-            </GridItem>
+            {firstLink?.label && (
+              <GridItem className="tablet:col-span-4 tablet:row-start-3 w-fit">
+                <Button href={href} variant={buttonType}>{firstLink.label}</Button>
+              </GridItem>
+            )}
           </Grid>
         </section>
       </Container>
