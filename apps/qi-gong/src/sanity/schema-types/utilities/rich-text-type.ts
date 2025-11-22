@@ -12,8 +12,18 @@ import { defineArrayMember, defineField, defineType } from "sanity";
  *  }
  */
 
-function createRichTextType(options?: { allowImages?: boolean; name?: string; title?: string; allowContactReferences?: boolean }) {
-  const { allowImages = true, name = "richText", title = "Rich Text", allowContactReferences = false } = options ?? {};
+function createRichTextType(options?: {
+  allowImages?: boolean;
+  name?: string;
+  title?: string;
+  allowContactReferences?: boolean;
+}) {
+  const {
+    allowImages = true,
+    name = "richText",
+    title = "Rich Text",
+    allowContactReferences = false,
+  } = options ?? {};
 
   // Define inline blocks for contact references
   const inlineBlocks: ReturnType<typeof defineArrayMember>[] = [];
@@ -33,7 +43,8 @@ function createRichTextType(options?: { allowImages?: boolean; name?: string; ti
     defineArrayMember({
       type: "block",
       // Add inline blocks if contact references are enabled
-      ...(allowContactReferences && inlineBlocks.length > 0 && { of: inlineBlocks }),
+      ...(allowContactReferences
+        && inlineBlocks.length > 0 && { of: inlineBlocks }),
       // Styles let you define what blocks can be marked up as. The default
       // set corresponds with HTML tags, but you can set any title or value
       // you want, and decide how you want to deal with it where you want to
@@ -98,7 +109,8 @@ function createRichTextType(options?: { allowImages?: boolean; name?: string; ti
     title,
     name,
     type: "array",
-    description: "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
+    description:
+      "Tip: Hvis du vil lave linjeskift/mellemrum i teksten, hold da SHIFT nede, når du taster enter.",
     of,
   });
 }

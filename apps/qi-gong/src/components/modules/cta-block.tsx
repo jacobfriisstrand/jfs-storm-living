@@ -68,8 +68,9 @@ export function CtaBlock({
 }: CtaBlockProps) {
   const ctaBlockData = generateCtaBlockData({ _key, title, description, image, link, buttonType, imagePosition, ...props });
 
-  const transformedLink = transformNavigationLinks([link as InputLink]);
-  const href = getNavigationHref(transformedLink[0]);
+  const transformedLink = transformNavigationLinks(link ? [link as InputLink] : []);
+  const firstLink = transformedLink[0];
+  const href = firstLink ? getNavigationHref(firstLink) : undefined;
 
   return (
     <Container asChild>
@@ -84,9 +85,11 @@ export function CtaBlock({
             {description && <PortableText value={description} components={getPortableTextComponents({ allowImages: false })} />}
           </GridItem>
 
-          <GridItem className={cn("tablet:col-span-5 tablet:row-start-3", imagePosition === "left" ? "tablet:col-start-8" : "tablet:col-start-1")}>
-            {link && <Button className="w-fit" href={href} variant={buttonType}>{link.label}</Button>}
-          </GridItem>
+          {firstLink?.label && (
+            <GridItem className={cn("tablet:col-span-5 tablet:row-start-3", imagePosition === "left" ? "tablet:col-start-8" : "tablet:col-start-1")}>
+              <Button className="w-fit" href={href} variant={buttonType}>{firstLink.label}</Button>
+            </GridItem>
+          )}
           <GridItem className={cn("tablet:row-span-3 relative", imagePosition === "left" ? "tablet:col-start-1 tablet:col-span-7" : "tablet:col-start-6")}>
             {image?.asset?.url && image.alt && (
               <>
